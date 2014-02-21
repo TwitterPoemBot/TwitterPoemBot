@@ -12,5 +12,14 @@ class TestSequenceFunctions(unittest.TestCase):
 			print "word, syllables: ", word, syllables
 			self.assertEqual(sylla.syllables(word), syllables)
 
+	def test_nonwords(self):
+		self.assertEqual(sylla.syllables('lol'), 1)
+		self.assertEqual(sylla.syllables('haha'), 2)
+		self.assertEqual(sylla.syllables('wtf'), 1)
+
+	def test_names(self):
+		self.assertEqual(sylla.syllables('yuki'), 2)
+		self.assertEqual(sylla.syllables('paul'), 1)
+
 if __name__ == '__main__':
 	unittest.main()

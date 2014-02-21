@@ -1,6 +1,5 @@
 hello 2
 goodbye 2
 greeting 2
-retarded 3
 feeling 2
 hi 1

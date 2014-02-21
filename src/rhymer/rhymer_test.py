@@ -1,3 +1,4 @@
+#test cases for rhyme checker
 import unittest
 from rhyme_checker import Rhymer
 from cStringIO import StringIO

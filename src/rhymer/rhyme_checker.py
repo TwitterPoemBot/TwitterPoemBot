@@ -26,6 +26,7 @@ class Rhymer:
         word = w.upper()
         return word in rhy_dict
 
+    #method checks if two words rhymes
     def rhymes(self, w1, w2):
         word1 = w1.upper()
         word2 = w2.upper()

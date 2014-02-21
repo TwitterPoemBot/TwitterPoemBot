@@ -1,13 +1,14 @@
 import sys
 
+#Rhymer class, used to determine if two words rhyme
 class Rhymer:
     global rhy_dict
     rhy_dict = {}
-    
+
     def __init__(self):
         f = open('CMU_Dict.txt', 'r')
         print f
-        
+
         for line in f:
             if(line.find(';;;') == -1):
                 parts = line.split( )
@@ -24,7 +25,7 @@ class Rhymer:
     def isInDict(self, w):
         word = w.upper()
         return word in rhy_dict
-    
+
     def rhymes(self, w1, w2):
         word1 = w1.upper()
         word2 = w2.upper()
@@ -35,7 +36,7 @@ class Rhymer:
         else:
             print "Word(s) not in dictionary."
             return False
-    
+
 
 if(__name__ == "__main__"):
     r = Rhymer();

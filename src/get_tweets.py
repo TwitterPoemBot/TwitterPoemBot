@@ -1,7 +1,6 @@
 from twython import Twython
 import MySQLdb
 import re
-import json
 
 if __name__ == '__main__':
     twitter = Twython(app_key="7JpoIKJbcWppGabeAuyGA", app_secret="cVQGxy1fcxJJxJ3avyitZ4wNqAUEWNTIEgjNUDZnA",

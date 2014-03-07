@@ -8,7 +8,7 @@ class TestTweetFunctions(unittest.TestCase):
 	topics = getter.get_trending_topics(twitter)
 	self.assertEqual(len(topics), 10)
 	getter.get_tweets(twitter, topics)
-	tweets = getter.get_tweets_from_file("#AskZEDD")
+	tweets = getter.get_tweets_from_file("#RIPSpeakerKnockerz")
 	print len(tweets)
 	self.assertTrue(len(tweets)>35)
 

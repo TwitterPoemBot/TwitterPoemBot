@@ -1,3 +1,9 @@
+{#
+This page renders the returned poem.  Comments on the overall layout should be
+placed on the index page.
+
+TODO: extract the base layout from the home and poem page
+#}
 <html>
 	<head>
 		<title>Twitter Poem Generator</title>
@@ -9,16 +15,9 @@
 				<div class="inner cover">
 					<h1 class="cover-heading">Twitter Poem Generator</h1>
 					<h3 class="text-muted">Poem id: {{ id }}</h3>
-					<!--
-					<form role="form" action="/generate" method="post">
-						<div class="input-group">
-							<input id="query" type="text" name="query" class="form-control" placeholder="enter in a #hashtag, @username, or poem type"></input>
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-default">Submit</button>
-							</span>
-						</div>
-					</form>
-					-->
+					<h4>Your query:
+						<small>{{ query  }}</small>
+					</h4>
 					<p id="output">
 					poem will appear<br>
 					within this text area<br>
@@ -30,8 +29,6 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		<script>
-		</script>
 		<link href="/static/style.css" rel="stylesheet" type="text/css"></link>
 		<!--
 		<script src="main.js"></script>

@@ -11,7 +11,7 @@ queries = []
 
 @app.route("/")
 def home_page():
-	"""This is the home page of the site, containing a search bar"""	
+	"""This is the home page of the site, containing a search bar"""
 	return render_template("index.html")
 
 @app.route("/generate", methods=["POST"])

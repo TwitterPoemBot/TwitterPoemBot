@@ -1,7 +1,7 @@
 __author__ = 'Mike'
 from twython import Twython
 from models.poems.haiku import haiku
-from models.poems.parser.parseLines import parse 
+from models.poems.parseLines import parse 
 
 
 if __name__ == '__main__':
@@ -12,5 +12,5 @@ if __name__ == '__main__':
     line2 = "a seven syllable line"
     line3 = "five syllable line"
     poem = haiku([parse(line1), parse(line2), parse(line3)])
-
+    print poem
     #twitter.update_status(status=poem)

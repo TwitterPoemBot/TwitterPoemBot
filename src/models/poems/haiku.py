@@ -11,7 +11,7 @@ def haiku(corpus):
     def get_lines(sylla_count):
         ''' Returns all tweets in the corpus with the given number of syllables 
             replace with sql call?'''
-        return [line['line'] for line in corpus if line['syllables'] == sylla_count] 
+        return [line['line'] for line in corpus if line != {} and line['syllables'] == sylla_count] 
 
     try:
         # Get random sample from 5 or 7 syllable tweets

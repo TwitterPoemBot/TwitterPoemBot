@@ -1,7 +1,7 @@
 __author__ = 'Mike'
 from twython import Twython
-from models.poems.haiku import haiku
-from models.poems.parseLines import parse 
+from site.models.poems.haiku import haiku
+from site.models.poems.parseLines import parse
 
 
 if __name__ == '__main__':

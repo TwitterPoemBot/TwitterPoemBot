@@ -1,5 +1,0 @@
-hello 2
-goodbye 2
-greeting 2
-feeling 2
-hi 1

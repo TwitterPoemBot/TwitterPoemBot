@@ -1,8 +1,8 @@
 __author__ = 'Mike'
 from twython import Twython
-from sites.models.poems.haiku import haiku
-from sites.models.poems.parseLines import parse
-from sites.models.tweets.get_tweets2 import get_tweets_from_hashtag
+from twitterpoet.models.poems.haiku import haiku
+from twitterpoet.models.poems.parseLines import parse
+from twitterpoet.models.tweets.get_tweets2 import get_tweets_from_hashtag
 
 
 if __name__ == '__main__':

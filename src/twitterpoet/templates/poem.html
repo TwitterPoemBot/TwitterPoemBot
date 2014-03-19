@@ -16,7 +16,7 @@ TODO: extract the base layout from the home and poem page
 					<h1 class="cover-heading">Twitter Poem Generator</h1>
                     <p id="output"> 
                     {% for line in poemText %}
-                        {{ line }}<br>
+                        {{ line.decode("utf-8") }}<br>
                     {% endfor %}
 					</p>
 				</div>

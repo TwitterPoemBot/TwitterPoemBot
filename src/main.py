@@ -24,7 +24,7 @@ def generate(hashtag, type='haiku'):
             parsed_tweets.append(parsed)
         count += 1
     # parsed_tweets = [parse(tweet) for tweet in tweets if parse(tweet) != {}]
-    logging.info('Total tweets:', count, ' rejected', rejected)
+    logging.info('Total tweets:' +  str(count) + ' rejected' + str(rejected))
     if type == 'haiku':
         return haiku(parsed_tweets)
     else:
@@ -39,5 +39,5 @@ if __name__ == '__main__':
     # results = get_tweets_from_hashtag(twitter, 'basketball')
     # print results[0]
     # print results
-    print generate('football')    
+    print generate('drunk')    
     # twitter.update_status(status=poem)

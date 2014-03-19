@@ -2,10 +2,14 @@ import re, string
 from rhymer.rhyme_checker import getPhone, isInDict, checkWeakRhyme
 from syllables.sylla import syllables
 
-ignored_words = re.compile(r'^[@#\\]|RT$')
+ignored_words = re.compile(r'^[@#\\]|RT$|http://')
 def parse(line):
     ''' Returns a dictionary of attributes ('syllables', 'phone') 
-        note phone may be None, if the last word has no rhyme'''
+        note phone may be None, if the last word has no rhyme
+
+        This ignores words like 'RT', '@foo', '#foo', 'http://..'
+        ex. 'RT @someone: hello #friend :) #hi' -> 'hello :)'
+    '''
     # List of words in line, ignores 'RT', '@foo', '#foo', emoji
     words = []
     for word in line.split( ):
@@ -14,6 +18,8 @@ def parse(line):
             words.append(cleaned)
     if len(words) == 0:
         return {}
+    # Remove ignored words from the actual tweet
+    line = ' '.join([w for w in line.split() if not ignored_words.findall(w)])
     # words = filter(None, [re.sub('[\W_]+', '', word) for word in line.split( )])
     count = 0
     for word in words:

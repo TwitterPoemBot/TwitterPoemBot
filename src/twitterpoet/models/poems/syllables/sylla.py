@@ -43,7 +43,7 @@ def syllables(word):
     return count
 
 if __name__ == '__main__':
-    logging.basicConfig(stream=sys.stderr, level=logging.warning)
+    logging.basicConfig(stream=sys.stderr, level=logging.WARNING)
     while(True) :
         word1 = raw_input("Word: ")
         print syllables(word1)

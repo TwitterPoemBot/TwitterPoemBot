@@ -5,9 +5,11 @@
 		python tpgserver.py
 """
 from flask import Flask, render_template, request, redirect, url_for
+from generate import generatePoem
 
 app = Flask(__name__)
 queries = []
+poemText = ""
 
 @app.route("/")
 def home_page():
@@ -21,24 +23,17 @@ def generate():
 	"""
 	if request.method == "POST":
 		print request.form["query"]
-		queries.append(request.form["query"])
-		return redirect(url_for("poem", id=(len(queries)-1)))
+        poemText=generatePoem(request.form["query"])
+        queries.append(request.form["query"])
+        return redirect(url_for("poem", poemText=poemText))
 
-@app.route("/poem/<id>")
-def poem(id):
+@app.route("/poem/<poemText>")
+def poem(poemText):
 	"""This function returns a poem with a given id.  This is mostly so that
 	users can share a poem with other users.
 	"""
-	try:
-		index = int(id)
-		qry = queries[int(id)]
-	except IndexError:
-		index = -1
-		qry = "query not found"
-	except:
-		index = -1
-		qry = "invalid url"
-	return render_template("poem.html", id=index, query=qry)
+        print poemText
+        return render_template("poem.html", poemText=poemText)
 
 if __name__ == "__main__":
 	app.run(debug=True, port=3000)

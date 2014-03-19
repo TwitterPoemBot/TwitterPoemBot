@@ -11,6 +11,9 @@ def haiku(corpus):
     try:
         # Get random sample from 5 or 7 syllable tweets
         five_syllables = sample(get_lines(5), 2)
+        if len(get_lines(5)) > 1:
+            while five_syllables[0] == five_syllables[1]:
+                five_syllables = sample(get_lines(5), 2)
         seven_syllables = sample(get_lines(7), 1)
     except ValueError as e:
         raise Exception('Could not construct haiku - not enough tweets found') 

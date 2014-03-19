@@ -3,9 +3,9 @@ import os
 
 rhy_dict = {}
 try:
-    f = open(os.path.join(os.path.dirname(__file__), 'CMU_Dict.txt'), 'r')
+    f = open(os.path.join(os.path.dirname(__file__), os.pardir, 'CMU_Dict.txt'), 'r')
 except:
-    f = open('CMU_Dict.txt', 'r')
+    f = open(os.path.join(os.pardir, 'CMU_Dict.txt'), 'r')
 # print f
     
 for line in f:
@@ -27,7 +27,10 @@ def isInDict(w):
 
 def getPhone(w):
     word = w.upper()
-    return rhy_dict[word]
+    try:
+        return rhy_dict[word]
+    except:
+        return None
 
 def checkWeakRhyme(a1, a2):
     weak = {'AA':1, 'AE':2, 'AH':3, 'AO':1, 'AW':5, 'AY':6, 'EH':7, 'ER':8,

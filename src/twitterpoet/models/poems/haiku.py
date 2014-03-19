@@ -1,12 +1,7 @@
 from random import sample
-#import MySQLdb
 
 def haiku(corpus):
     ''' Generates a Haiku poem given a list of (text, syllable count, rhyme) tuples ''' 
-
-    # con = MySQLdb.connect(host='ampolgroup.com', user='tpg', passwd='uiucCS428', db='twitterpoem', use_unicode=True, charset='utf8')
-    # c.execute('''SELECT * FROM tweets''')
-    # print c.fetchone()
 
     def get_lines(sylla_count):
         ''' Returns all tweets in the corpus with the given number of syllables 
@@ -24,4 +19,3 @@ def haiku(corpus):
     poem += [seven_syllables[0]]
     poem += [five_syllables[1]]
     return '\n'.join(poem)
-

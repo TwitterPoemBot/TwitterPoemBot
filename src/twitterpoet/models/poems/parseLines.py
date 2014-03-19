@@ -2,18 +2,25 @@ import re, string
 from rhymer.rhyme_checker import getPhone, isInDict, checkWeakRhyme
 from syllables.sylla import syllables
 
+ignored_words = re.compile(r'^[@#\\]|RT$')
 def parse(line):
-    words = line.split( )
-    sylla = 0
+    ''' Returns a dictionary of attributes ('syllables', 'phone') 
+        note phone may be None, if the last word has no rhyme'''
+    # List of words in line, ignores 'RT', '@foo', '#foo', emoji
+    words = []
+    for word in line.split( ):
+        cleaned = re.sub('[\W_]+', '', word)
+        if len(cleaned) != 0 and not ignored_words.findall(word):
+            words.append(cleaned)
+    if len(words) == 0:
+        return {}
+    # words = filter(None, [re.sub('[\W_]+', '', word) for word in line.split( )])
+    count = 0
     for word in words:
-        fixedWord = re.sub('[\W_]+', '', word)
-        if(isInDict(fixedWord)):
-            sylla += syllables(fixedWord)
-            phone = getPhone(fixedWord)
-        else:
-            return {}
+        count += syllables(word)
+    phone = getPhone(words[-1])
     
-    parsed = {'line':line, 'syllables':sylla, 'phone':phone}
+    parsed = {'line':line, 'syllables':count, 'phone':phone}
     return parsed
 
 if(__name__ == "__main__"):
@@ -25,3 +32,7 @@ if(__name__ == "__main__"):
         print "Lose"
     print p1
     print p2
+
+    while(True):
+        line = raw_input('Line:')
+        print parse(line)

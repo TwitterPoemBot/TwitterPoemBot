@@ -20,6 +20,10 @@ class TestParseFunctions(unittest.TestCase):
 		output = parse(line1)
 		self.assertEqual(output, {})
 
+    def test_emoji(self):
+        line = r'dog \xf0\x9f\x98\x9f'
+        output = parse(line)
+        self.assertEqual(output, {'phone': 'AO1G', 'line': line, 'syllables': 1})
 
 if __name__ == '__main__':
     unittest.main()

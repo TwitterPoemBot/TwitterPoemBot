@@ -14,14 +14,10 @@ TODO: extract the base layout from the home and poem page
 				<div class="masthead"></div>
 				<div class="inner cover">
 					<h1 class="cover-heading">Twitter Poem Generator</h1>
-					<h3 class="text-muted">Poem id: {{ id }}</h3>
-					<h4>Your query:
-						<small>{{ query  }}</small>
-					</h4>
-					<p id="output">
-					poem will appear<br>
-					within this text area<br>
-					aren't I clever?<br>
+                    <p id="output"> 
+                    {% for line in poemText %}
+                        {{ line }}<br>
+                    {% endfor %}
 					</p>
 				</div>
 			</div>

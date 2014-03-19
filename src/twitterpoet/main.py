@@ -4,7 +4,7 @@
 	To run it on a debug server, just type in the following command:
 		python tpgserver.py
 """
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
 
 app = Flask(__name__)
@@ -23,17 +23,18 @@ def generate():
 	"""
 	if request.method == "POST":
 		print request.form["query"]
-        poemText=generatePoem(request.form["query"])
+        session["poemText"]=generatePoem(request.form["query"]).encode('ascii', 'ignore')
         queries.append(request.form["query"])
-        return redirect(url_for("poem", poemText=poemText))
+        return redirect(url_for("poem"))
 
-@app.route("/poem/<poemText>")
-def poem(poemText):
+@app.route("/poem")
+def poem():
 	"""This function returns a poem with a given id.  This is mostly so that
 	users can share a poem with other users.
 	"""
-        print poemText
-        return render_template("poem.html", poemText=poemText)
+        print session["poemText"]
+        return render_template("poem.html", poemText=session["poemText"].split('\n'))
 
 if __name__ == "__main__":
-	app.run(debug=True, port=3000)
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    app.run(debug=True, port=3000)

@@ -6,7 +6,7 @@ try:
     f = open(os.path.join(os.path.dirname(__file__), 'CMU_Dict.txt'), 'r')
 except:
     f = open('CMU_Dict.txt', 'r')
-print f
+# print f
     
 for line in f:
     if(line.find(';;;') == -1):

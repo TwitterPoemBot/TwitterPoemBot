@@ -23,7 +23,7 @@ def generate():
 	"""
 	if request.method == "POST":
 		print request.form["query"]
-        session["poemText"]=generatePoem(request.form["query"]).encode('ascii', 'ignore')
+        session["poemText"]=generatePoem(request.form["query"]).decode('ascii', 'ignore')
         queries.append(request.form["query"])
         return redirect(url_for("poem"))
 
@@ -35,6 +35,6 @@ def poem():
         print session["poemText"]
         return render_template("poem.html", poemText=session["poemText"].split('\n'))
 
-if __name__ == "__main__":
-    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-    app.run(debug=True, port=3000)
+
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+

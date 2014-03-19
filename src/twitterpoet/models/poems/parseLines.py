@@ -2,7 +2,7 @@ import re, string
 from rhymer.rhyme_checker import getPhone, isInDict, checkWeakRhyme
 from syllables.sylla import syllables
 
-ignored_words = re.compile(r'^[@#\\]|RT$|http://')
+ignored_words = re.compile(r'^[@\\]|RT$|http://|https://')
 def parse(line):
     ''' Returns a dictionary of attributes ('syllables', 'phone') 
         note phone may be None, if the last word has no rhyme
@@ -21,6 +21,7 @@ def parse(line):
     # Remove ignored words from the actual tweet
     line = ' '.join([w for w in line.split() if not ignored_words.findall(w)])
     # words = filter(None, [re.sub('[\W_]+', '', word) for word in line.split( )])
+    line = re.sub(r'#', '', line)
     count = 0
     for word in words:
         count += syllables(word)

@@ -1,6 +1,6 @@
 import haiku
 from parseLines import parse
-import unittest
+import unittest, logging, sys
 
 class TestHaiku(unittest.TestCase):
 
@@ -24,4 +24,5 @@ class TestHaiku(unittest.TestCase):
         self.assertRaises(Exception, haiku.haiku, corpus)
 
 if __name__ == '__main__':
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     unittest.main()

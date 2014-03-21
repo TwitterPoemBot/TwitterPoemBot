@@ -2,7 +2,7 @@ import re, os, sys
 import logging
 dictionaries=['mhyph.txt']
 dicts = []
-vowel = re.compile(r'[aoiuy]|ee+')
+vowel = re.compile(r'([aoiuy]|ee)+')
 digit = re.compile(r'\d')
 
 # Set-up

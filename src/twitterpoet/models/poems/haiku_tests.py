@@ -1,13 +1,12 @@
-import haiku
-import unittest
+import haiku, unittest, logging, sys
 
 class TestHaiku(unittest.TestCase):
 
     def test_valid(self):
-        corpus = [('5 syllable line(1)', 5, 0), 
-              ('5 syllable line(2)', 5, 0),
-              ('a seven syllable line', 7, 0),
-              ('some filler', 3, 0)]
+        corpus = [{'line': '5 syllable line(1)', 'syllables':5}, 
+              {'line':'5 syllable line(2)', 'syllables':5},
+              {'line':'a seven syllable line', 'syllables':7},
+              {'line':'some filler', 'syllables':3}]
         poem = haiku.haiku(corpus)
         print poem
         poem = poem.split('\n')
@@ -17,10 +16,11 @@ class TestHaiku(unittest.TestCase):
 
     def test_invalid(self):
         ''' Tests insufficient amount of appropriate tweets '''
-        corpus = [('a tweet', 2, 0), 
-              ('just some stupid text', 5, 0),
-              ('a frog jumps into the pond', 7, 0)]
+        corpus = [{'line':'a tweet', 'syllables':2}, 
+              {'line':'just some stupid text', 'syllables':5},
+              {'line':'a frog jumps into the pond', 'syllables':7}]
         self.assertRaises(Exception, haiku.haiku, corpus)
 
 if __name__ == '__main__':
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     unittest.main()

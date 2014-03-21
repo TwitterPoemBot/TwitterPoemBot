@@ -1,30 +1,16 @@
 from twython import Twython
 from twitterpoet.models.poems.haiku import haiku
-from twitterpoet.models.poems.parseLines import parse
+from twitterpoet.models.poems.parseLines import parse_all
 from twitterpoet.models.tweets.get_tweets2 import get_tweets_from_hashtag
 import logging
 
 def generate(hashtag, type='haiku'):
     ''' Takes in a hashtag and poem type and returns a poem as a string '''
+    if hashtag == '' or hashtag is None:
+        raise Exception('Must have a hashtag')
 
     tweets = get_tweets_from_hashtag(twitter, hashtag)
-
-    # Debug Stuff #
-    logging.info(len(tweets))
-    for tweet in tweets:
-        logging.info(tweet)
-
-    parsed_tweets = []
-    count, rejected = 0, 0
-    for tweet in tweets:
-        parsed = parse(tweet) 
-        if parsed == {}:
-            rejected += 1
-        else:
-            parsed_tweets.append(parsed)
-        count += 1
-    # parsed_tweets = [parse(tweet) for tweet in tweets if parse(tweet) != {}]
-    logging.info('Total tweets:' +  str(count) + ' rejected' + str(rejected))
+    parsed_tweets = parse_all(tweets)
     if type == 'haiku':
         return haiku(parsed_tweets)
     else:
@@ -39,5 +25,5 @@ if __name__ == '__main__':
     # results = get_tweets_from_hashtag(twitter, 'basketball')
     # print results[0]
     # print results
-    print generate('drunk')    
+    print generate('poetry')    
     # twitter.update_status(status=poem)

@@ -3,20 +3,19 @@ from random import sample
 def couplet(corpus):
     ''' Generates a Couplet poem given a list of (text, syllable count, rhyme) tuples ''' 
 
-    def get_lines(phone):
-        return [line for line in corpus if line != {} and line['phone'] == phone]
+    def get_lines(phone, word):
+        return [line for line in corpus if line != {} and line['phone'] == phone and word != line['line'].split()[-1]]
     def get_lines2():
-	return [line for line in corpus if line != {} and len(get_lines(line['phone']))]  
+	return [line for line in corpus if line != {} and len(get_lines(line['phone'], line['line'].split()[-1]))>0]  
     try:
         # Get random sample from 5 or 7 syllable tweets
         first = sample(get_lines2(), 1)
 	phone = first[0]
 	phone = phone['phone']
 	second = first
-	print len(get_lines(phone))
-        if len(get_lines(phone)) > 1:
-            while first[0]['line'].split()[-1] == second[0]['line'].split()[-1]:
-                second = sample(get_lines(phone), 1)
+	word = first[0]['line'].split()[-1]
+        if len(get_lines(phone, word)) > 0:
+            second = sample(get_lines(phone, word), 1)
 	else:
 	    raise Exception('Could not construct haiku - not enough tweets found')
     except ValueError as e:

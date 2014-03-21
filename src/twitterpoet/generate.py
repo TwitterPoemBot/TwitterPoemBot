@@ -1,5 +1,6 @@
 from twython import Twython
 from models.poems.haiku import haiku
+from models.poems.couplet import couplet
 from models.poems.parseLines import parse
 from models.tweets.get_tweets2 import get_tweets_from_hashtag
 import logging
@@ -27,6 +28,8 @@ def generatePoem(hashtag, type='haiku'):
     logging.info('Total tweets:', count, ' rejected', rejected)
     if type == 'haiku':
         return haiku(parsed_tweets)
+    elif type == 'couplet':
+	return couplet(parsed_tweets)
     else:
         raise Exception('Poem type ' + type + ' not recognized')
 

@@ -21,5 +21,11 @@ class TestHaiku(unittest.TestCase):
               ('a frog jumps into the pond', 7, 0)]
         self.assertRaises(Exception, couplet.couplet, corpus)
 
+    def test_same_word(self):
+	''' Tests that couplet can't be made with lines ending in same word '''
+	corpus = [parse('I want a poem!'),
+		parse('A really lazy poem!')]
+        self.assertRaises(Exception, couplet.couplet, corpus)	
+
 if __name__ == '__main__':
     unittest.main()

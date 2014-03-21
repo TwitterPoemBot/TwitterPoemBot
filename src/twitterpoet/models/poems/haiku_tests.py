@@ -1,12 +1,14 @@
-import haiku, unittest, logging, sys
+import haiku
+from parseLines import parse
+import unittest, logging, sys
 
 class TestHaiku(unittest.TestCase):
 
     def test_valid(self):
-        corpus = [{'line': '5 syllable line(1)', 'syllables':5}, 
-              {'line':'5 syllable line(2)', 'syllables':5},
-              {'line':'a seven syllable line', 'syllables':7},
-              {'line':'some filler', 'syllables':3}]
+        corpus = [parse('5 syllable line(1)'), 
+              parse('5 syllable line(2)'),
+              parse('a seven syllable line'),
+              parse('some filler')]
         poem = haiku.haiku(corpus)
         print poem
         poem = poem.split('\n')
@@ -16,9 +18,9 @@ class TestHaiku(unittest.TestCase):
 
     def test_invalid(self):
         ''' Tests insufficient amount of appropriate tweets '''
-        corpus = [{'line':'a tweet', 'syllables':2}, 
-              {'line':'just some stupid text', 'syllables':5},
-              {'line':'a frog jumps into the pond', 'syllables':7}]
+        corpus = [('a tweet', 2, 0), 
+              ('just some stupid text', 5, 0),
+              ('a frog jumps into the pond', 7, 0)]
         self.assertRaises(Exception, haiku.haiku, corpus)
 
 if __name__ == '__main__':

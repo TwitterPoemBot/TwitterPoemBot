@@ -4,7 +4,7 @@ def couplet(corpus):
     ''' Generates a Couplet poem given a list of (text, syllable count, rhyme) tuples ''' 
 
     def get_lines(phone, word):
-        return [line for line in corpus if line != {} and line['phone'] == phone and word != line['line'].split()[-1]]
+        return [line for line in corpus if line != {} and line['phone'] == phone and word.lower() != line['line'].split()[-1].lower()]
     def get_lines2():
 	return [line for line in corpus if line != {} and len(get_lines(line['phone'], line['line'].split()[-1]))>0]  
     try:

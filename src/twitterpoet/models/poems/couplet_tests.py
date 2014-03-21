@@ -24,7 +24,7 @@ class TestHaiku(unittest.TestCase):
     def test_same_word(self):
 	''' Tests that couplet can't be made with lines ending in same word '''
 	corpus = [parse('I want a poem!'),
-		parse('A really lazy poem!')]
+		parse('A really lazy POEM!')]
         self.assertRaises(Exception, couplet.couplet, corpus)	
 
 if __name__ == '__main__':

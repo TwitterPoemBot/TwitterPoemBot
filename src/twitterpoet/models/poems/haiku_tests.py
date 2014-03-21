@@ -1,13 +1,14 @@
 import haiku
+from parseLines import parse
 import unittest
 
 class TestHaiku(unittest.TestCase):
 
     def test_valid(self):
-        corpus = [('5 syllable line(1)', 5, 0), 
-              ('5 syllable line(2)', 5, 0),
-              ('a seven syllable line', 7, 0),
-              ('some filler', 3, 0)]
+        corpus = [parse('5 syllable line(1)'), 
+              parse('5 syllable line(2)'),
+              parse('a seven syllable line'),
+              parse('some filler')]
         poem = haiku.haiku(corpus)
         print poem
         poem = poem.split('\n')

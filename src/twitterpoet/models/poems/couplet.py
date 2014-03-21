@@ -15,7 +15,7 @@ def couplet(corpus):
 	second = first
 	print len(get_lines(phone))
         if len(get_lines(phone)) > 1:
-            while first == second:
+            while first[0]['line'].split()[-1] == second[0]['line'].split()[-1]:
                 second = sample(get_lines(phone), 1)
 	else:
 	    raise Exception('Could not construct haiku - not enough tweets found')

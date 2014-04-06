@@ -6,6 +6,8 @@
 """
 from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
+from models.poems.poem import Poem
+from models.poems.poem import db
 import logging
 app = Flask(__name__)
 queries = []
@@ -31,6 +33,13 @@ def generate():
         queries.append(request.form["query"])
         return redirect(url_for("poem"))
 
+@app.route("/save", methods=["POST"])
+def save():
+    """This function saves a poem into the db"""
+    if session["poemText"] != "":
+        Poem.save(Poem(session["poemText"]))
+    return redirect(url_for("poem"))
+
 @app.route("/poem")
 def poem():
     """This function returns a poem with a given id.  This is mostly so that
@@ -43,4 +52,5 @@ def poem():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == "__main__":
+    db.create_all()
     app.run()

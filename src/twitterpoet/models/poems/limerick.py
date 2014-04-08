@@ -15,8 +15,9 @@ def limerick(corpus):
         for line in lines:
             phone = line['phone']
             if phone in dic:
-                if line['last_word'] dic[phone]
-                dic[phone].append(line)
+                # Avoid repeated last words
+                if line['last_word'] not in [l['last_word'] for l in dic[phone]]:
+                    dic[phone].append(line)
             else:
                 dic[phone] = [line]
         # Pick the least syllabically variant n lines

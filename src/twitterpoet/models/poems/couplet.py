@@ -25,4 +25,6 @@ def couplet(corpus):
     second = second[0]
     poem = [first['line']]
     poem += [second['line']]
+    poem += [first['url']]
+    poem += [second['url']]
     return '\n'.join(poem)

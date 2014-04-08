@@ -29,7 +29,7 @@ def parse(line):
     phone = getPhone(words[-1])
     last_word = words[-1];
     
-    parsed = {'line':line, 'syllables':count, 'phone':phone, 'last_word':last_word}
+    parsed = {'line':line, 'syllables':count, 'phone':phone, 'last_word':last_word, 'url':""}
     return parsed
 
 def parse_all(tweets):

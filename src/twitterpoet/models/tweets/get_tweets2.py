@@ -38,7 +38,7 @@ def get_tweets_from_hashtag(twitter, hashtag):
 	for results2 in results:
 	    for tweet in results2['statuses']:
 		tweets.append(tweet['text'].encode('utf-8'))
-		tweets.append("twitter.com/TwttPoet/status/"+tweet['id_str'])
+		tweets.append("twitter.com/TwttPoet/status/"+tweet['id_str'].encode('utf-8'))
 		max_id = tweet['id']
     return tweets
 

@@ -7,9 +7,10 @@ def haiku(corpus):
     def get_lines(sylla_count):
         ''' Returns all tweets in the corpus with the given number of syllables 
             replace with sql call?'''
-        lines = [line['line'] for line in corpus if line['syllables'] == sylla_count] 
+        lines = [line for line in corpus if line['syllables'] == sylla_count] 
+        linez = [line['line'] for line in corpus if line['syllables'] == sylla_count] 
         logging.info('Lines with ' + str(sylla_count) + ' syllables: ')
-        logging.info(lines)
+        logging.info(linez)
         return lines
 
     try:
@@ -19,7 +20,10 @@ def haiku(corpus):
     except ValueError as e:
         raise Exception('Could not construct haiku - not enough tweets found') 
 
-    poem = [five_syllables[0]]
-    poem += [seven_syllables[0]]
-    poem += [five_syllables[1]]
+    poem = [five_syllables[0]['line']]
+    poem += [seven_syllables[0]['line']]
+    poem += [five_syllables[1]['line']]
+    poem += [five_syllables[0]['url']]
+    poem += [seven_syllables[0]['url']]
+    poem += [five_syllables[1]['url']]
     return '\n'.join(poem)

@@ -2,7 +2,7 @@ from random import sample
 import logging
 
 def haiku(corpus):
-    ''' Generates a Haiku poem given a list of (text, syllable count, rhyme) tuples ''' 
+    ''' Generates a Haiku poem given a dictionary of (text, syllable count, rhyme) ''' 
 
     def get_lines(sylla_count):
         ''' Returns all tweets in the corpus with the given number of syllables 
@@ -18,7 +18,7 @@ def haiku(corpus):
         five_syllables = sample(get_lines(5), 2)
         seven_syllables = sample(get_lines(7), 1)
     except ValueError as e:
-        raise Exception('Could not construct haiku - not enough tweets found') 
+        raise Exception('Could not construct haiku - not enough tweets') 
 
     poem = [five_syllables[0]['line']]
     poem += [seven_syllables[0]['line']]

@@ -26,14 +26,13 @@ class TestHaiku(unittest.TestCase):
     def test_valid1(self):
         corpus = [parse('5 syllable line'), 
               parse('5 syllable lines'),
-              parse('a seven syllable line'),
+              parse('a seven syllable line!'),
               parse('some filler words')]
         poem = haiku.haiku(corpus)
-        print poem
         poem = poem.split('\n')
         self.assertTrue((poem[0] == '5 syllable line' and poem[2] == '5 syllable lines')
                      or (poem[2] == '5 syllable line' and poem[0] == '5 syllable lines'))
-        self.assertTrue(poem[1] == 'a seven syllable line')
+        self.assertTrue(poem[1] == 'a seven syllable line!')
 
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stderr, level=logging.INFO)

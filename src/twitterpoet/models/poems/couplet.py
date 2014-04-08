@@ -18,9 +18,9 @@ def couplet(corpus):
 	    while word==second[0]['last_word']:
                 second = sample(get_lines(phone, word), 1)
 	else:
-	    raise Exception('Could not construct haiku - not enough tweets found')
+	    raise Exception('Could not construct couplet - not enough tweets found')
     except ValueError as e:
-        raise Exception('Could not construct haiku - not enough tweets found') 
+        raise Exception('Could not construct couplet - not enough tweets found') 
     first = first[0]
     second = second[0]
     poem = [first['line']]

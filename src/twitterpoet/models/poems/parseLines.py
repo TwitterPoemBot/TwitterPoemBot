@@ -3,13 +3,15 @@ from rhymer.rhyme_checker import getPhone, isInDict, checkWeakRhyme
 from syllables.sylla import syllables
 from sets import Set
 
-ignored_words = re.compile(r'^[@\\]|RT$|https?://|www.')
+ignored_words = re.compile(r'^([@\\]|RT$)|https?://|www.')
 # end_hashtags = re.compile(r'(#\S*\b)+$')
 
 def parse(line):
     ''' Parses an individual line ''' 
-    # List of words in line, ignores 'RT', '@foo', '#foo', emoji
+
+    # words is a list of the cleaned up words to feed syllable/rhymer
     words = []
+    # line is the actual string of text to be presented to user
     for word in line.split( ):
         cleaned = re.sub('[\W_]+', '', word)
         if len(cleaned) != 0 and not ignored_words.findall(word):

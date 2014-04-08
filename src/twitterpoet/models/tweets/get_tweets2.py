@@ -32,11 +32,15 @@ def get_tweets_from_file(s):
 def get_tweets_from_hashtag(twitter, hashtag):
     max_id = float("inf")
     tweets = []
-    for n in range(1,22):
+    for n in range(1,21):
 	results = []
 	results.append(twitter.search(q=hashtag, count=100, max_id=max_id))
 	for results2 in results:
 	    for tweet in results2['statuses']:
 		tweets.append(tweet['text'].encode('utf-8'))
+		tweets.append("twitter.com/TwttPoet/status/"+tweet['id_str'])
 		max_id = tweet['id']
     return tweets
+
+twitter = connect()
+get_tweets_from_hashtag(twitter, "GameOfThrones")

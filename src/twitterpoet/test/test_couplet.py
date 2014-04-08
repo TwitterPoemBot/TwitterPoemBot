@@ -5,7 +5,7 @@ sys.path.insert(0, '../')
 from models.poems import couplet
 from models.poems.parseLines import parse
 
-class TestHaiku(unittest.TestCase):
+class TestCouplet(unittest.TestCase):
 
     def test_valid(self):
         corpus = [parse('I like the bay'), 
@@ -19,9 +19,15 @@ class TestHaiku(unittest.TestCase):
 
     def test_invalid(self):
         ''' Tests insufficient amount of appropriate tweets '''
-        corpus = [('a tweet', 2, 0), 
-              ('just some stupid text', 5, 0),
-              ('a frog jumps into the pond', 7, 0)]
+        corpus = [parse('a tweet'),
+              parse('just some stupid text'),
+              parse('a frog jumps into the pond')]
+        self.assertRaises(Exception, couplet.couplet, corpus)
+
+    def test_same_word(self):
+        ''' Tests that couplet can't be made with lines ending in same word '''
+        corpus = [parse('I want a poem!'),
+        parse('A really lazy POEM!')]
         self.assertRaises(Exception, couplet.couplet, corpus)
 
 if __name__ == '__main__':

@@ -36,14 +36,6 @@ def generate():
         queries.append(request.form["query"])
         return redirect(url_for("poem", id=str(p.id)))
 
-@app.route("/save", methods=["POST"])
-def save():
-    """This function saves a poem into the db"""
-    if session["poemText"] != "":
-        id = Poem.save(Poem(session["poemText"]))
-        return redirect(url_for("poem", id=str(id)))
-    return redirect(url_for("poem", id=str(-1)))
-
 @app.route("/poem/<id>")
 def poem(id):
     """This function returns a poem with a given id.  This is mostly so that

@@ -60,6 +60,19 @@ class TestLimerick(unittest.TestCase):
         self.assertTrue(poem[3] == "So seldom are clean")
         self.assertTrue(poem[4] == "And the clean ones so seldom are comical")
 
+    def test_urls(self):
+        corpus = parse_all(['The limerick packs laughs anatomical', 'url1',
+            'Into space that is quite economical', 'url2',
+            "But the good ones I've seen", 'url3',
+            'So seldom are clean', 'url4',
+            'And the clean ones so seldom are comical', 'url5'])
+        poem = limerick(corpus).split('\n')
+        self.assertTrue(poem[5] == 'url1')
+        self.assertTrue(poem[6] == 'url2')
+        self.assertTrue(poem[7] == 'url3')
+        self.assertTrue(poem[8] == 'url4')
+        self.assertTrue(poem[9] == 'url5')
+
 
     
 

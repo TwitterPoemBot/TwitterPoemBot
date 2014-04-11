@@ -32,7 +32,7 @@ class TestUrls(unittest.TestCase):
 	couplet = generatePoem("#NationalPetDay", 'couplet')
 	lines = couplet.split('\n')
 	text0 = get_tweet_from_url(connect(), lines[2])
-	text1 = get_tweet_from_url(connect(), lines[4])
+	text1 = get_tweet_from_url(connect(), lines[3])
 	self.assertEqual(parse(text0)['line'], lines[0])
 	self.assertEqual(parse(text1)['line'], lines[1])
 

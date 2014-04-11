@@ -44,5 +44,7 @@ def get_tweets_from_hashtag(twitter, hashtag):
                 max_id = tweet['id']
     return tweets
 
-# twitter = connect()
-# get_tweets_from_hashtag(twitter, "GameOfThrones")
+def get_tweet_from_url(twitter, url):
+    index = url.index("status/")
+    num = url[7+index:]
+    return twitter.show_status(id=num)['text']

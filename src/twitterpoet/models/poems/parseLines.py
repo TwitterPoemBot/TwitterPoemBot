@@ -17,8 +17,6 @@ def is_english(line):
     words = [w.strip(string.punctuation) for w in line.split()]
     word_count = len([w for w in words if isInDict(w)])
     char_count = len([c for c in line if ord(c) < 128])
-    print word_count
-    print char_count
     return float(word_count) / len(words) >= w_threshold \
             and float(char_count) / len(line) >= c_threshold
 

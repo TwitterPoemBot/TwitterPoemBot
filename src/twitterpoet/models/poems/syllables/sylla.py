@@ -33,7 +33,7 @@ def syllables(word):
         return syllable_dic[word][0]
     # Handle numbers
     # Use heuristic if it's not in any dictionary
-    logging.warning('Using heuristic')
+    # logging.warning('Using heuristic')
     if len(word) <= 3:
         return 1
     else:

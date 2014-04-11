@@ -25,13 +25,13 @@ def generate():
     """
     if request.method == "POST":
         print request.form["query"]
-        session["poemText"] = ""
+        poemText = ""
         if request.form["format"] == "0":
-            session["poemText"]=generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
+            poemText = generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
         if request.form["format"] == "1":
-            session["poemText"]=generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
-        p = Poem(session["poemText"])
-        Poem.save(p)
+            poemText = generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
+        p = Poem(poemText)
+        p.save()
         print p.id
         queries.append(request.form["query"])
         return redirect(url_for("poem", id=str(p.id)))
@@ -42,7 +42,6 @@ def poem(id):
     users can share a poem with other users.
     """
 	# we probably shoudln't be using sessions for this stuff!
-    print session["poemText"]
     print "poem page requested"
     print "id: ", id
     poem = Poem.query.filter_by(id=id).first()

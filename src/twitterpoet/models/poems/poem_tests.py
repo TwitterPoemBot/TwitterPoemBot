@@ -7,6 +7,7 @@ class TestPoem(unittest.TestCase):
         p = Poem("test")
         self.assertTrue(p.poemText == "test")
 
+
     def test_db(self):
         self.assertTrue(db != None)
 

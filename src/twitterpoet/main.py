@@ -30,10 +30,11 @@ def generate():
             session["poemText"]=generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
         if request.form["format"] == "1":
             session["poemText"]=generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
-        id = Poem.save(Poem(session["poemText"]))
-        print id
+        p = Poem(session["poemText"])
+        Poem.save(p)
+        print p.id
         queries.append(request.form["query"])
-        return redirect(url_for("poem", id=str(id)))
+        return redirect(url_for("poem", id=str(p.id)))
 
 @app.route("/save", methods=["POST"])
 def save():

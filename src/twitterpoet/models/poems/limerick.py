@@ -9,12 +9,13 @@ def limerick(corpus):
             ex. {'ha1':['some tweet text', 'some other text']} '''
 
         lines = [line for line in corpus if line['syllables'] >= sylla_min and line['syllables'] <= sylla_max] 
-        logging.info(lines)
         dic = {}
         # dic is a dictionary of phone strings to line dictionaries
         for line in lines:
             phone = line['phone']
-            if phone in dic:
+            if phone is None:
+                continue
+            elif phone in dic:
                 # Avoid repeated last words
                 if line['last_word'] not in [l['last_word'] for l in dic[phone]]:
                     dic[phone].append(line)
@@ -24,6 +25,7 @@ def limerick(corpus):
         return_lines = () # A tuple of (list of lines, variance)
         for key in dic:
             lines = dic[key]
+            print lines
             if len(lines) >= n:
                 # Check variance, we want lines with similar syllable counts
                 variance = max(lines, key=lambda line:line['syllables'])['syllables'] - \
@@ -48,10 +50,12 @@ def limerick(corpus):
         b = get_lines(3, 6, 2)  # Get 2 3-6 syllable lines that rhyme
     except ValueError as e:
         raise Exception('Could not construct limerick - not enough tweets') 
-
+    print "Limerick: A, B"
+    print a
+    print b
     poem = a[:2]
     poem += b
-    poem += a[2:]
+    poem += a[2:3]
     return '\n'.join(poem)
 
 

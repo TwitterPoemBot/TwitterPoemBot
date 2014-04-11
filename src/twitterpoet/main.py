@@ -2,7 +2,7 @@
 	This is the website frontend to the TwitterPoemBot
 
 	To run it on a debug server, just type in the following command:
-		python tpgserver.py
+		python main.py
 """
 from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
@@ -30,23 +30,33 @@ def generate():
             session["poemText"]=generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
         if request.form["format"] == "1":
             session["poemText"]=generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
+        id = Poem.save(Poem(session["poemText"]))
+        print id
         queries.append(request.form["query"])
-        return redirect(url_for("poem"))
+        return redirect(url_for("poem", id=str(id)))
 
 @app.route("/save", methods=["POST"])
 def save():
     """This function saves a poem into the db"""
     if session["poemText"] != "":
-        Poem.save(Poem(session["poemText"]))
-    return redirect(url_for("poem"))
+        id = Poem.save(Poem(session["poemText"]))
+        return redirect(url_for("poem", id=str(id)))
+    return redirect(url_for("poem", id=str(-1)))
 
-@app.route("/poem")
-def poem():
+@app.route("/poem/<id>")
+def poem(id):
     """This function returns a poem with a given id.  This is mostly so that
     users can share a poem with other users.
     """
+	# we probably shoudln't be using sessions for this stuff!
     print session["poemText"]
-    return render_template("poem.html", poemText=session["poemText"].split('\n'))
+    print "poem page requested"
+    print "id: ", id
+    poem = Poem.query.filter_by(id=id).first()
+    print "poem: ", poem
+    if poem is None:
+        return render_template("poem.html", poemText=["Invalid Poem!"])
+    return render_template("poem.html", poemText=poem.poemText.split('\n'))
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'

@@ -8,13 +8,29 @@ from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
 from models.poems.poem import Poem
 from models.poems.poem import db
+from twitter import getTwitter
+from models.tweets.get_tweets2 import get_trending_topics
 import logging
+import datetime
 app = Flask(__name__)
+trending = ""
 
 @app.route("/")
 def home_page():
-    """This is the home page of the site, containing a search bar"""
-    return render_template("index.html")
+    """This is the home page of the site, containing topics.
+    Topics are refreshed every 20 seconds.
+    """
+    try:   
+        diff = datetime.datetime.now() - session["lastUpdateTime"]
+        if diff.total_seconds() > 20:
+            twitter = getTwitter()
+            session["trending"] = get_trending_topics(twitter)
+            session["lastUpdateTime"] = datetime.datetime.now()
+    except KeyError:
+        twitter = getTwitter()
+        session["trending"] = get_trending_topics(twitter)
+        session["lastUpdateTime"] = datetime.datetime.now()
+    return render_template("index.html", trending=session["trending"])
 
 @app.route("/generate", methods=["POST"])
 def generate():

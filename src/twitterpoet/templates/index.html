@@ -18,7 +18,11 @@ TODO: extract the base layout from the home and poem page
 					#}
 					<form role="form" action="/generate" method="post">
 						<div class="input-group">
-							<input id="query" type="text" name="query" class="form-control" placeholder="enter in a #hashtag and select a poem type"></input>
+							<select id="query" name="query" class="input-xlarge">
+								{% for line in trending %}
+									<option value={{ line }}>{{ line }}</option>
+								{% endfor %}
+							</select>
 							<span class="input-group-btn">
 								<button type="submit" class="btn btn-default">Submit</button>
 							</span>

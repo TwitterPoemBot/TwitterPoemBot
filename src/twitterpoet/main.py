@@ -10,8 +10,6 @@ from models.poems.poem import Poem
 from models.poems.poem import db
 import logging
 app = Flask(__name__)
-queries = []
-poemText = ""
 
 @app.route("/")
 def home_page():
@@ -20,12 +18,18 @@ def home_page():
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    """This function is where the poem queries get sent to.  In the future,
-    it will request a poem from our generator.
+    """This function is where the poem generation queries get sent to.  The post request
+    should include the following fields:
+
+    format: determines what kind of poem will be generated.  Here is a list of
+        types of poems that are accepted through this interface:
+        0: Haiku
+        1: Couplet
+    query: This is the text that's put into the text box.  This usually indicates the
+        topic that the user wants the poem to be based off of.
     """
     if request.method == "POST":
         print request.form["query"]
-        poemText = ""
         if request.form["format"] == "0":
             poemText = generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
         if request.form["format"] == "1":
@@ -51,7 +55,7 @@ def poem(id):
     # associate each line with their twitter link
     lines = poem.poemText.split("\n")
     poems = lines[:len(lines)/2]
-    links = ["http://" + x for x in lines[len(lines)/2:]]
+    links = [for x in lines[len(lines)/2:]]
     # zip them together
     pt = zip(poems, links)
     return render_template("poem.html", poemText=pt)

@@ -7,15 +7,29 @@ from models.poems.parseLines import parse
 
 class TestCouplet(unittest.TestCase):
 
-    def test_valid(self):
-        corpus = [parse('I like the bay'), 
+    def test_one_more_syllable(self):
+        ''' Tests that a couplet can be made if the lines are one syllable difference  '''
+
+        corpus = [parse('Boy I like the bay'), 
               parse('We will go there today!'),
               parse('some filler')]
         poem = couplet.couplet(corpus)
         print poem
         poem = poem.split('\n')
-        self.assertTrue((poem[0] == 'I like the bay' and poem[1] == 'We will go there today!')
-                     or (poem[1] == 'I like the bay' and poem[0] == 'We will go there today!'))
+        self.assertTrue((poem[0] == 'Boy I like the bay' and poem[1] == 'We will go there today!')
+                     or (poem[1] == 'Boy I like the bay' and poem[0] == 'We will go there today!'))
+
+    def test_same_syllables(self):
+        ''' Tests that a couplet can be made with two lines w/ same # syllables  '''
+
+        corpus = [parse('Well gosh, I hate the bay'), 
+              parse('You must go there today!'),
+              parse('some filler')]
+        poem = couplet.couplet(corpus)
+        print poem
+        poem = poem.split('\n')
+        self.assertTrue((poem[0] == 'Well gosh, I hate the bay' and poem[1] == 'You must go there today!')
+                     or (poem[1] == 'Well gosh, I hate the bay' and poem[0] == 'You must go there today!'))
 
     def test_invalid(self):
         ''' Tests insufficient amount of appropriate tweets '''
@@ -26,7 +40,7 @@ class TestCouplet(unittest.TestCase):
 
     def test_same_word(self):
         ''' Tests that couplet can't be made with lines ending in same word '''
-        corpus = [parse('I want a poem!'),
+        corpus = [parse('Say, I want a poem!'),
         parse('A really lazy POEM!')]
         self.assertRaises(Exception, couplet.couplet, corpus)
 

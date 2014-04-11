@@ -13,11 +13,8 @@ if __name__ == '__main__':
     twitter = Twython(app_key="7JpoIKJbcWppGabeAuyGA", app_secret="cVQGxy1fcxJJxJ3avyitZ4wNqAUEWNTIEgjNUDZnA",
                   oauth_token="2329651538-iZ2nEPBSIyl3u5AnU4ppfYEfJflTEeH6Krl8OO5", oauth_token_secret="V6ja2kfgl3aNr28QvOb9VmlbP8e9jxkora82wplPT43Vz")
 
-    # results = get_tweets_from_hashtag(twitter, 'basketball')
-    # print results[0]
-    # print results
     poem = generatePoem('gameofthrones', type='limerick')    
     print '-----'
     print poem
-    if raw_input('Publish to twitter? Y/N').lower() == 'y':
+    if raw_input('Publish to twitter? Y/N: ').lower() == 'y':
         twitter.update_status(status=poem)

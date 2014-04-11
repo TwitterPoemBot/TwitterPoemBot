@@ -34,10 +34,11 @@ def generate():
             poemText = generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
         if request.form["format"] == "1":
             poemText = generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
+        if request.form["format"] == "2":
+            poemText = generatePoem(request.form["query"], 'limerick').decode('ascii', 'ignore')
         p = Poem(poemText)
         p.save()
         print p.id
-        queries.append(request.form["query"])
         return redirect(url_for("poem", id=str(p.id)))
 
 @app.route("/poem/<id>")
@@ -54,10 +55,11 @@ def poem(id):
         return render_template("poem.html", poemText=["Invalid Poem!"])
     # associate each line with their twitter link
     lines = poem.poemText.split("\n")
-    poems = lines[:len(lines)/2]
+    print len(lines)
+    poem = lines[:len(lines)/2]
     links = [("http://" + x) for x in lines[len(lines)/2:]]
     # zip them together
-    pt = zip(poems, links)
+    pt = zip(poem, links)
     return render_template("poem.html", poemText=pt)
 
 

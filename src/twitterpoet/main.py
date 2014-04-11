@@ -48,7 +48,13 @@ def poem(id):
     print "poem: ", poem
     if poem is None:
         return render_template("poem.html", poemText=["Invalid Poem!"])
-    return render_template("poem.html", poemText=poem.poemText.split('\n'))
+    # associate each line with their twitter link
+    lines = poem.poemText.split("\n")
+    poems = lines[:len(lines)/2]
+    links = ["http://" + x for x in lines[len(lines)/2:]]
+    # zip them together
+    pt = zip(poems, links)
+    return render_template("poem.html", poemText=pt)
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'

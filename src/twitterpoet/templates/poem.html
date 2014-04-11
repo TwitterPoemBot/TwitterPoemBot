@@ -15,8 +15,14 @@ TODO: extract the base layout from the home and poem page
 				<div class="inner cover">
 					<h1 class="cover-heading">Twitter Poem Generator</h1>
                     <p id="output"> 
-                    {% for line in poemText %}
-                        {{ line.decode("utf-8") }}<br>
+                    {% for pair in poemText %}
+					{{ pair[0].decode('utf-8') }}
+					<a href="{{pair[1].decode('utf-8')}}">
+						<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-link"></span>
+						</button>
+					</a>
+						<br>
                     {% endfor %}
                     </p>
 				</div>

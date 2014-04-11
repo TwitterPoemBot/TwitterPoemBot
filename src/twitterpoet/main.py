@@ -55,7 +55,7 @@ def poem(id):
     # associate each line with their twitter link
     lines = poem.poemText.split("\n")
     poems = lines[:len(lines)/2]
-    links = [for x in lines[len(lines)/2:]]
+    links = [("http://" + x) for x in lines[len(lines)/2:]]
     # zip them together
     pt = zip(poems, links)
     return render_template("poem.html", poemText=pt)

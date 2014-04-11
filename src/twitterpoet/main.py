@@ -46,12 +46,17 @@ def generate():
     """
     if request.method == "POST":
         print request.form["query"]
-        if request.form["format"] == "0":
-            poemText = generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
-        if request.form["format"] == "1":
-            poemText = generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
-        if request.form["format"] == "2":
-            poemText = generatePoem(request.form["query"], 'limerick').decode('ascii', 'ignore')
+        try:
+            if request.form["format"] == "0":
+                poemText = generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
+            if request.form["format"] == "1":
+                poemText = generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
+            if request.form["format"] == "2":
+                poemText = generatePoem(request.form["query"], 'limerick').decode('ascii', 'ignore')
+        except:
+            print "there was an error with this query:"
+            print request.form
+            return redirect(url_for("poem", id=str(-1)))
         p = Poem(poemText)
         p.save()
         print p.id
@@ -61,14 +66,17 @@ def generate():
 def poem(id):
     """This function returns a poem with a given id.  This is mostly so that
     users can share a poem with other users.
+
+    An id of -1 indicates that there was an error.
     """
-	# we probably shoudln't be using sessions for this stuff!
+    if id == -1:
+        render_template("poem.html", poemText=["There was an error"])
     print "poem page requested"
     print "id: ", id
     poem = Poem.query.filter_by(id=id).first()
     print "poem: ", poem
     if poem is None:
-        return render_template("poem.html", poemText=["Invalid Poem!"])
+        return render_template("poem.html", poemText=["Poem not found."])
     # associate each line with their twitter link
     lines = poem.poemText.split("\n")
     print len(lines)

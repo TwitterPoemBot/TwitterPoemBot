@@ -32,7 +32,7 @@ def limerick(corpus):
                            min(lines, key=lambda line:line['syllables'])['syllables']
 
                 if len(return_lines) == 0 or least_variance > variance:
-                    return_lines = [line['line'] for line in lines]
+                    return_lines = [line for line in lines]
                     least_variance = variance
                     logging.info("best lines: ")
                     logging.info(return_lines)
@@ -56,9 +56,13 @@ def limerick(corpus):
     print "Limerick: A, B"
     print a
     print b
-    poem = a[:2]
-    poem += b
-    poem += a[2:3]
+    poem = [i['line'] for i in a[:2]]
+    poem += [i['line'] for i in b]
+    poem += [i['line'] for i in a[2:3]]
+    # append URLs
+    poem += [i['url'] for i in a[:2]]
+    poem += [i['url'] for i in b]
+    poem += [i['url'] for i in a[2:3]]
     return '\n'.join(poem)
 
 

@@ -44,7 +44,20 @@ def get_tweets_from_hashtag(twitter, hashtag):
                 max_id = tweet['id']
     return tweets
 
+def get_fewer_tweets_from_hashtag(twitter, hashtag):
+    max_id = float("inf")
+    tweets = []
+    for n in range(1,3):
+        results = []
+        results.append(twitter.search(q=hashtag, count=100, max_id=max_id))
+        for results2 in results:
+            for tweet in results2['statuses']:
+                tweets.append(tweet['text'].encode('utf-8'))
+                tweets.append("twitter.com/TwttPoet/status/"+tweet['id_str'].encode('utf-8'))
+                max_id = tweet['id']
+    return tweets
+
 def get_tweet_from_url(twitter, url):
     index = url.index("status/")
     num = url[7+index:]
-    return twitter.show_status(id=num)['text']
+    return twitter.show_status(id=num)['text'].encode('utf-8')

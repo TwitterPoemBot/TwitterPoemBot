@@ -22,19 +22,22 @@ def limerick(corpus):
             else:
                 dic[phone] = [line]
         # Pick the least syllabically variant n lines
-        return_lines = () # A tuple of (list of lines, variance)
+        return_lines = ''
+        least_variance = 999
         for key in dic:
             lines = dic[key]
-            print lines
             if len(lines) >= n:
                 # Check variance, we want lines with similar syllable counts
                 variance = max(lines, key=lambda line:line['syllables'])['syllables'] - \
                            min(lines, key=lambda line:line['syllables'])['syllables']
 
-                if len(return_lines) == 0 or return_lines[1] > variance:
-                    return_lines = ([line['line'] for line in lines], variance)
+                if len(return_lines) == 0 or least_variance > variance:
+                    return_lines = [line['line'] for line in lines]
+                    least_variance = variance
+                    logging.info("best lines: ")
+                    logging.info(return_lines)
         if len(return_lines) != 0:
-            return return_lines[0]
+            return return_lines
         else:
             raise ValueError
 

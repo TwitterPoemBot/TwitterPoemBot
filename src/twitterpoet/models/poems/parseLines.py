@@ -17,8 +17,8 @@ def is_english(line):
     words = [w.strip(string.punctuation) for w in line.split()]
     word_count = len([w for w in words if isInDict(w)])
     char_count = len([c for c in line if ord(c) < 128])
-    print [w for w in words if isInDict(w)]
-    print [c for c in line if ord(c) < 128]
+    print word_count
+    print char_count
     return float(word_count) / len(words) >= w_threshold \
             and float(char_count) / len(line) >= c_threshold
 
@@ -26,10 +26,9 @@ def parse(line):
     ''' Parses an individual line '''
 
     line = line.replace('&amp', '&')    # Hardcoded rule for '&amp' to '&'
-    logging.info("Parsing " + line)
+    logging.info("Parsing: " + line)
     if not is_english(line):
-        print "non-english: ", line
-        print type(line)
+        logging.info("non-english: " + line)
         return {}
     # words is a list of the cleaned up words to feed syllable/rhymer
     words = []
@@ -85,6 +84,7 @@ def parse_all(tweets):
         count += 1
     # parsed_tweets = [parse(tweet) for tweet in tweets if parse(tweet) != {}]
     logging.info('Total tweets:' +  str(count) + ' rejected:' + str(rejected) + ' duplicates:' + str(duplicates))
+    logging.info('-'*10)
     return parsed_tweets
 
 if(__name__ == "__main__"):

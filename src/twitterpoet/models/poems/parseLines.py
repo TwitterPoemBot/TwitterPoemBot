@@ -72,13 +72,14 @@ def parse_all(tweets):
     count, rejected, duplicates = 0, 0, 0 # For logging purposes
     for tweet in tweets:
         parsed = parse(tweet) 
+	url = urls.pop(0)
         # Reject if parsed fails or if the cleaned tweet text is duplicated
         if parsed == {}:
             rejected += 1
         elif seen_tweets.get(parsed['line']):
             duplicates += 1
         else:
-            parsed['url'] = urls.pop(0)
+            parsed['url'] = url
             parsed_tweets.append(parsed)
             seen_tweets[parsed['line']] = 1
         count += 1

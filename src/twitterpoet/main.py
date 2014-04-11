@@ -8,7 +8,7 @@ from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
 from models.poems.poem import Poem
 from models.poems.poem import db
-from twitter import getTwitter
+from models.tweets.get_tweets2 import connect 
 from models.tweets.get_tweets2 import get_trending_topics
 import logging
 import datetime
@@ -23,11 +23,11 @@ def home_page():
     try:   
         diff = datetime.datetime.now() - session["lastUpdateTime"]
         if diff.total_seconds() > 20:
-            twitter = getTwitter()
+            twitter = connect()
             session["trending"] = get_trending_topics(twitter)
             session["lastUpdateTime"] = datetime.datetime.now()
     except KeyError:
-        twitter = getTwitter()
+        twitter = connect()
         session["trending"] = get_trending_topics(twitter)
         session["lastUpdateTime"] = datetime.datetime.now()
     return render_template("index.html", trending=session["trending"])

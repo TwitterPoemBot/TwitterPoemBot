@@ -3,3 +3,5 @@
 # in this project's server/lib directory.
 Flask==0.10
 Jinja2
+Flask-SQLAlchemy
+Twython

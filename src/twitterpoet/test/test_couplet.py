@@ -31,6 +31,15 @@ class TestCouplet(unittest.TestCase):
         self.assertTrue((poem[0] == 'Well gosh, I hate the bay' and poem[1] == 'You must go there today!')
                      or (poem[1] == 'Well gosh, I hate the bay' and poem[0] == 'You must go there today!'))
 
+    def test_syllable_discrep(self):
+        ''' Tests that a couplet cannot be made if there is a difference of more than one syllable  '''
+
+        corpus = [parse('I miss the bay'), 
+              parse('You may or may not go there today!'),
+              parse('some filler')]
+        self.assertRaises(Exception, couplet.couplet, corpus)
+
+
     def test_invalid(self):
         ''' Tests insufficient amount of appropriate tweets '''
         corpus = [parse('a tweet'),

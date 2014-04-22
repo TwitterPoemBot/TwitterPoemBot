@@ -35,7 +35,7 @@ def get_tweets_from_file(s):
 def get_tweets_from_hashtag(twitter, hashtag):
     max_id = float("inf")
     tweets = []
-    for n in range(1,101):
+    for n in range(1,21):
         results = []
         try:
             results.append(twitter.search(q=hashtag, count=100, max_id=max_id))
@@ -45,9 +45,7 @@ def get_tweets_from_hashtag(twitter, hashtag):
                     tweets.append("twitter.com/TwttPoet/status/"+tweet['id_str'].encode('utf-8'))
                     max_id = tweet['id']
         except TwythonRateLimitError as e:
-            print str(twitter.get_lastfunction_header('x-rate-limit-reset'))
-            print str(time())
-            seconds = str(float(twitter.get_lastfunction_header('x-rate-limit-reset'))-time())
+            seconds = str(float(twitter.get_lastfunction_header('x-rate-limit-reset'))-time()+5)
             raise Exception('you hit the rate limit! Try again in '+seconds+' seconds.')
     return tweets
 

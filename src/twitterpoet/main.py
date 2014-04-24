@@ -10,6 +10,7 @@ from models.poems.poem import Poem
 from models.poems.poem import db
 from models.tweets.get_tweets2 import connect 
 from models.tweets.get_tweets2 import get_trending_topics
+from models.tweets.send_tweet import sendPoem
 import logging
 import datetime
 app = Flask(__name__)
@@ -83,8 +84,19 @@ def poem(id):
     poemLinks += [tweet.url for tweet in poem.tweets]
     # zip them together
     pt = zip(poemLines, poemLinks)
-    return render_template("poem.html", poemText=pt)
+    return render_template("poem.html", poemText=pt, poemID=id)
 
+@app.route("/sendtweet", methods=["POST"])
+def sendtweet():
+    print "sending tweet"
+    print request.form["id"]
+    twitter = connect()
+    poem = Poem.query.filter_by(id=request.form["id"]).first()
+    if poem is None:
+        return render_template("poem.html", poemText=["Poem not found."])
+    sendPoem(twitter, poem)
+    print "send success"
+    return redirect(url_for("poem", id=str(poem.id)))
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 

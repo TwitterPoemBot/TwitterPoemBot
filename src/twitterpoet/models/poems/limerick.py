@@ -1,7 +1,9 @@
 from random import sample
+from poem import Tweet
+from poem import Poem
 import logging
 
-def limerick(corpus):
+def limerick(corpus, hashtag):
     ''' Generates a limerick given a dictionary of line/syllables/phone ''' 
 
     def get_lines(sylla_min, sylla_max, n):
@@ -56,13 +58,13 @@ def limerick(corpus):
     print "Limerick: A, B"
     print a
     print b
-    poem = [i['line'] for i in a[:2]]
-    poem += [i['line'] for i in b]
-    poem += [i['line'] for i in a[2:3]]
-    # append URLs
-    poem += [i['url'] for i in a[:2]]
-    poem += [i['url'] for i in b]
-    poem += [i['url'] for i in a[2:3]]
-    return '\n'.join(poem)
+    
+    tweets = [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[:2]]
+    tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in b]
+    tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[2:3]]
+    
+    poem = Poem(tweets, hashtag, 'limerick')
+    
+    return poem
 
 

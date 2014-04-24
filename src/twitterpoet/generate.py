@@ -14,10 +14,10 @@ def generatePoem(hashtag, type):
     parsed_tweets = parse_all(tweets)
 
     if type == 'haiku':
-        return haiku(parsed_tweets)
+        return haiku(parsed_tweets, hashtag)
     elif type == 'couplet':
-        return couplet(parsed_tweets)
+        return couplet(parsed_tweets, hashtag)
     elif type == 'limerick':
-        return limerick(parsed_tweets)
+        return limerick(parsed_tweets, hashtag)
     else:
         raise Exception('Poem type ' + type + ' not recognized')

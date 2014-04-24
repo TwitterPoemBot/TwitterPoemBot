@@ -17,7 +17,7 @@ TODO: extract the base layout from the home and poem page
                     <p id="output"> 
                     {% for pair in poemText %}
 					{{ pair[0].decode('utf-8') }}
-					<a href="{{pair[1].decode('utf-8')}}">
+					<a href="http://{{pair[1].decode('utf-8')}}">
 						<button type="button" class="btn btn-default btn-sm">
 							<span class="glyphicon glyphicon-link"></span>
 						</button>

@@ -1,8 +1,8 @@
 """
-	This is the website frontend to the TwitterPoemBot
+    This is the website frontend to the TwitterPoemBot
 
-	To run it on a debug server, just type in the following command:
-		python main.py
+    To run it on a debug server, just type in the following command:
+        python main.py
 """
 from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
@@ -10,6 +10,7 @@ from models.poems.poem import Poem
 from models.poems.poem import db
 from models.tweets.get_tweets2 import connect 
 from models.tweets.get_tweets2 import get_trending_topics
+from models.tweets.send_tweet import sendPoem
 import logging
 import datetime
 app = Flask(__name__)
@@ -48,16 +49,16 @@ def generate():
         print request.form["query"]
         try:
             if request.form["format"] == "0":
-                poemText = generatePoem(request.form["query"], 'haiku').decode('ascii', 'ignore')
+                poem = generatePoem(request.form["query"], 'haiku')
             if request.form["format"] == "1":
-                poemText = generatePoem(request.form["query"], 'couplet').decode('ascii', 'ignore')
+                poem = generatePoem(request.form["query"], 'couplet')
             if request.form["format"] == "2":
-                poemText = generatePoem(request.form["query"], 'limerick').decode('ascii', 'ignore')
+                poem = generatePoem(request.form["query"], 'limerick')
         except:
             print "there was an error with this query:"
             print request.form
             return redirect(url_for("poem", id=str(-1)))
-        p = Poem(poemText)
+        p = poem
         p.save()
         print p.id
         return redirect(url_for("poem", id=str(p.id)))
@@ -74,18 +75,28 @@ def poem(id):
     print "poem page requested"
     print "id: ", id
     poem = Poem.query.filter_by(id=id).first()
-    print "poem: ", poem
     if poem is None:
         return render_template("poem.html", poemText=["Poem not found."])
     # associate each line with their twitter link
-    lines = poem.poemText.split("\n")
-    print len(lines)
-    poem = lines[:len(lines)/2]
-    links = [("http://" + x) for x in lines[len(lines)/2:]]
+    poemLines = []
+    poemLines += [tweet.text for tweet in poem.tweets]
+    poemLinks = []
+    poemLinks += [tweet.url for tweet in poem.tweets]
     # zip them together
-    pt = zip(poem, links)
-    return render_template("poem.html", poemText=pt)
+    pt = zip(poemLines, poemLinks)
+    return render_template("poem.html", poemText=pt, poemID=id)
 
+@app.route("/sendtweet", methods=["POST"])
+def sendtweet():
+    print "sending tweet"
+    print request.form["id"]
+    twitter = connect()
+    poem = Poem.query.filter_by(id=request.form["id"]).first()
+    if poem is None:
+        return render_template("poem.html", poemText=["Poem not found."])
+    sendPoem(twitter, poem)
+    print "send success"
+    return redirect(url_for("poem", id=str(poem.id)))
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 

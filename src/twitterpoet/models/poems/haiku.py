@@ -1,7 +1,9 @@
 from random import sample
+from poem import Tweet
+from poem import Poem
 import logging
 
-def haiku(corpus):
+def haiku(corpus, hashtag):
     ''' Generates a Haiku poem given a dictionary of (text, syllable count, rhyme) ''' 
 
     def get_lines(sylla_count):
@@ -20,10 +22,10 @@ def haiku(corpus):
     except ValueError as e:
         raise Exception('Could not construct haiku - not enough tweets') 
 
-    poem = [five_syllables[0]['line']]
-    poem += [seven_syllables[0]['line']]
-    poem += [five_syllables[1]['line']]
-    poem += [five_syllables[0]['url']]
-    poem += [seven_syllables[0]['url']]
-    poem += [five_syllables[1]['url']]
-    return '\n'.join(poem)
+    tweets = [Tweet(five_syllables[0]['line'].decode('ascii', 'ignore'), five_syllables[0]['url'].decode('ascii', 'ignore'), hashtag)]
+    tweets += [Tweet(seven_syllables[0]['line'].decode('ascii', 'ignore'), seven_syllables[0]['url'].decode('ascii', 'ignore'), hashtag)]
+    tweets += [Tweet(five_syllables[1]['line'].decode('ascii', 'ignore'), five_syllables[1]['url'].decode('ascii', 'ignore'), hashtag)]
+    
+    poem = Poem(tweets, hashtag, 'haiku')
+
+    return poem

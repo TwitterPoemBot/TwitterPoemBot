@@ -19,8 +19,8 @@ TODO: extract the base layout from the home and poem page
 					<form role="form" action="/generate" method="post">
 						<div class="input-group">
 							<input id="query" type="text" name="query" class="form-control" placeholder="enter in a #hashtag and select a poem type"></input>
-													<span class="input-group-btn">
-								<button type="submit" class="btn btn-default">Submit</button>
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-default" onclick="spinner()">Submit</button>
 							</span>
 						</div>
                         <div class="control-group">
@@ -34,6 +34,7 @@ TODO: extract the base layout from the home and poem page
                           </div>
                         </div>
 					</form>
+                    <div style="position: absolute; top:50%; left:50%;" id="loading"></div>
 					<p>enter a hashtag and generate a poem</p>
 					<div class="row">
 						<div class="col-md-4">
@@ -71,6 +72,32 @@ TODO: extract the base layout from the home and poem page
 			These are the end of page includes.  This will be placed in
 			an includes.html file
 		#}
+
+        <script src="/static/javascript/spin.js"></script>
+        <script>
+            function spinner(){
+            var opts = {
+              lines: 13, // The number of lines to draw
+              length: 20, // The length of each line
+              width: 10, // The line thickness
+              radius: 30, // The radius of the inner circle
+              corners: 1, // Corner roundness (0..1)
+              rotate: 0, // The rotation offset
+              direction: 1, // 1: clockwise, -1: counterclockwise
+              color: '#000', // #rgb or #rrggbb or array of colors
+              speed: 1, // Rounds per second
+              trail: 60, // Afterglow percentage
+              shadow: false, // Whether to render a shadow
+              hwaccel: false, // Whether to use hardware acceleration
+              className: 'spinner', // The CSS class to assign to the spinner
+              zIndex: 2e9, // The z-index (defaults to 2000000000)
+              top: 'auto', // Top position relative to parent in px
+              left: 'auto' // Left position relative to parent in px
+            };
+            var target = document.getElementById('loading');
+            var spinner = new Spinner(opts).spin(target);
+            };
+        </script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>

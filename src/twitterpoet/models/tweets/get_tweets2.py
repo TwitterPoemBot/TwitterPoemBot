@@ -46,7 +46,7 @@ def get_tweets_from_hashtag(twitter, hashtag):
                     max_id = tweet['id']
         except TwythonRateLimitError as e:
             seconds = str(float(twitter.get_lastfunction_header('x-rate-limit-reset'))-time()+5)
-            raise Exception('you hit the rate limit! Try again in '+seconds+' seconds.')
+            raise Exception('You hit the rate limit! Try again in '+seconds+' seconds.')
     return tweets
 
 def get_fewer_tweets_from_hashtag(twitter, hashtag):

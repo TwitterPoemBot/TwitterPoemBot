@@ -35,12 +35,34 @@ TODO: extract the base layout from the home and poem page
                         </div>
 					</form>
 					<p>enter a hashtag and generate a poem</p>
-					<h2>trending topics</h2>
-					<p>
-						{% for line in trending %}
-						<a style="margin:10px;" href="#" onClick='$("#query").val(" {{ line }} ")'> {{ line }} </a>
-						{% endfor %}
-					</p>
+					<div class="row">
+						<div class="col-md-4">
+							<h2>trending topics</h2>
+							<p>
+								{% for line in trending %}
+								<a class="link-list" href="#" onClick='$("#query").val(" {{ line }} ")'> {{ line }} </a>
+								{% endfor %}
+							</p>
+						</div>
+						<div class="col-md-4">
+							<h2>recent poems</h2>
+							<div class="list-group">
+								<a href="#" class="link-list">nig</a>
+								<a href="#" class="link-list">nog</a>
+								<a href="#" class="link-list">fig</a>
+								<a href="#" class="link-list">fog</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h2>trending poems</h2>
+							<div class="list-group">
+								<a href="#" class="link-list">nig</a>
+								<a href="#" class="link-list">nog</a>
+								<a href="#" class="link-list">fig</a>
+								<a href="#" class="link-list">fog</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

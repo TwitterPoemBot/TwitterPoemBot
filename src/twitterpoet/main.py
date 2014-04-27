@@ -8,7 +8,7 @@ from flask import Flask, session, render_template, request, redirect, url_for
 from generate import generatePoem
 from models.poems.poem import Poem
 from models.poems.poem import db
-from models.tweets.get_tweets2 import connect 
+from models.tweets.get_tweets2 import connect
 from models.tweets.get_tweets2 import get_trending_topics
 from models.tweets.send_tweet import sendPoem
 import logging
@@ -21,7 +21,7 @@ def home_page():
     """This is the home page of the site, containing topics.
     Topics are refreshed every 20 seconds.
     """
-    try:   
+    try:
         diff = datetime.datetime.now() - session["lastUpdateTime"]
         if diff.total_seconds() > 20:
             twitter = connect()
@@ -84,7 +84,26 @@ def poem(id):
     poemLinks += [tweet.url for tweet in poem.tweets]
     # zip them together
     pt = zip(poemLines, poemLinks)
-    return render_template("poem.html", poemText=pt, poemID=id)
+    score = poem.likes - poem.dislikes
+    return render_template("poem.html", poemText=pt, poemID=id, poemScore=score)
+
+@app.route("/like", methods=["Post"])
+def like():
+    print request.form["id"]
+    poem = Poem.query.filter_by(id=request.form["id"]).first()
+    if poem is None:
+        return render_template("poem.html", poemText=["Poem not found."])
+    poem.likes += 1
+    return redirect(url_for("poem", id=str(poem.id)))
+
+@app.route("/dislike", methods=["Post"])
+def dislike():
+    print request.form["id"]
+    poem = Poem.query.filter_by(id=request.form["id"]).first()
+    if poem is None:
+        return render_template("poem.html", poemText=["Poem not found."])
+    poem.dislikes += 1
+    return redirect(url_for("poem", id=str(poem.id)))
 
 @app.route("/sendtweet", methods=["POST"])
 def sendtweet():
@@ -101,5 +120,6 @@ def sendtweet():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == "__main__":
+    #db.drop_all()
     db.create_all()
     app.run()

@@ -16,6 +16,8 @@ class Poem(db.Model):
     hashtag = db.Column(db.String(50))
     type = db.Column(db.String(50))
     tweets = db.relationship('Tweet', secondary=tweets, backref=db.backref('poems', lazy='dynamic'))
+    likes = db.Column(db.Integer)
+    dislikes = db.Column(db.Integer)
 
     def __init__(self, tweets, hashtag, type):
         """construtor for Poem
@@ -24,6 +26,8 @@ class Poem(db.Model):
         """
         self.tweets = tweets
         self.hashtag = hashtag
+        self.likes = 0
+        self.dislikes = 0
         self.type = type
 
     #def __repr__(self):
@@ -36,19 +40,25 @@ class Poem(db.Model):
             db.session.add(tweet)
         db.session.commit()
         return self.id
-        
+
+    def like():
+        self.likes += 1
+
+    def dislike():
+        self.dislikes += 1
+
 class Tweet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(300))
     text = db.Column(db.String(300))
     hashtag = db.Column(db.String(50))
-    
-    
+
+
     def __init__(self, text, url, hashtag):
         self.text = text
         self.url = url
         self.hashtag = hashtag
-        
+
     def save(self):
         db.session.add(self)
         db.session.commit()

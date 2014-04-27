@@ -24,3 +24,23 @@ body {
 	text-align: center;
 }
 
+.arrowup{
+    background:url(https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-up-20.png);
+    cursor:pointer;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border: none;    
+}
+
+.arrowdown{
+    background:url(https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-down-20.png);
+    cursor:pointer;
+    width: 20px;
+    height: 20px;
+    border: none;    
+}
+
+.likeForm{
+  margin-bottom: 0px;  
+}

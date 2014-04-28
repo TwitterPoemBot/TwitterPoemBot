@@ -12,21 +12,10 @@ TODO: extract the base layout from the home and poem page
 		<div class="wrapper">
 			<div class="cover-container">
 				<div class="masthead"></div>
-				<div class="inner cover">
+				<div class="inner cover center-block">
 					<h1 class="cover-heading">Twitter Poem Generator</h1>
-                    <p id="output"> 
-                    {% for tweet in poem.tweets %}
-                    	{{ tweet.text.decode('utf-8') }}
-                    	<a href="http://{{tweet.url.decode('utf-8')}}">
-							<button type="button" class="btn btn-default btn-sm">
-								<span class="glyphicon glyphicon-link"></span>
-							</button>
-						</a>
-						<br>
-					{% endfor %}
-					<i>- {{ poem.hashtag }} </i>
-                    </p>
-                    <div class="formHolder">
+
+                    <div class="formHolder pull-left">
                             <form class="likeForm" role="form" action="/like" method="post">
                                 <button type="submit" name="like" class="arrowup">
                                 <input type="hidden" name="id" id="id" value="{{ poem.id }}"></input> 
@@ -46,6 +35,21 @@ TODO: extract the base layout from the home and poem page
                                 <button type="submit" class="btn btn-default">Tweet this poem</button>
                             </form>
                     </div>
+					<div style="width: 100%; margin-left: 25px;">
+                    <p id="output"> 
+                    {% for tweet in poem.tweets %}
+                    	{{ tweet.text.decode('utf-8') }}
+                    	<a href="http://{{tweet.url.decode('utf-8')}}">
+							<button type="button" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-link"></span>
+							</button>
+						</a>
+						<br>
+					{% endfor %}
+					<i>- {{ poem.hashtag }} </i>
+                    </p>
+					</div>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 		</div>

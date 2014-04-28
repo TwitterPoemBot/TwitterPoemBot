@@ -21,7 +21,7 @@ body {
  * The generated poem has this style
  */
 #output {
-	text-align: center;
+	text-align: left;
 }
 
 .arrowup{
@@ -39,6 +39,10 @@ body {
     width: 20px;
     height: 20px;
     border: none;    
+}
+.formHolder {
+	width: 150px;
+	float:left;
 }
 
 .likeForm{

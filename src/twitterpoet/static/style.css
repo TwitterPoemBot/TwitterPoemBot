@@ -44,3 +44,10 @@ body {
 .likeForm{
   margin-bottom: 0px;  
 }
+
+ul {
+	list-style: none;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}

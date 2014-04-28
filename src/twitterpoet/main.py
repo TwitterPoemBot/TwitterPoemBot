@@ -31,7 +31,9 @@ def home_page():
         twitter = connect()
         session["trending"] = get_trending_topics(twitter)
         session["lastUpdateTime"] = datetime.datetime.now()
-    return render_template("index.html", trending=session["trending"])
+    top_poems = Poem.query.order_by(Poem.likes.desc()).all()
+    recent_poems = Poem.query.order_by(Poem.date.desc()).all()
+    return render_template("index.html", trending=session["trending"], recent=recent_poems[:5], top=top_poems[:5])
 
 @app.route("/generate", methods=["POST"])
 def generate():

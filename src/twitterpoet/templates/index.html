@@ -55,12 +55,11 @@ TODO: extract the base layout from the home and poem page
 							</div>
 						</div>
 						<div class="col-md-4">
-							<h2>trending poems</h2>
+							<h2>top poems</h2>
 							<div class="list-group">
-								<a href="#" class="link-list">nig</a>
-								<a href="#" class="link-list">nog</a>
-								<a href="#" class="link-list">fig</a>
-								<a href="#" class="link-list">fog</a>
+								{% for line in top %}
+								<a href="poem/{{ line.id }}" class="link-list">A poem about {{ line.hashtag }}</a>
+								{% endfor %}
 							</div>
 						</div>
 					</div>

@@ -45,7 +45,7 @@ class Poem(db.Model):
         """Saves a poem to the db"""
         db.session.add(self)
         # for tweet in self.tweets:
-            
+
         db.session.commit()
         return self.id
 

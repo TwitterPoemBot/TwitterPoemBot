@@ -81,24 +81,32 @@ def poem(id):
 
 @app.route("/like", methods=["Post"])
 def like():
+    """This function defines the post request for liking a poem
+    each time this request is made a poem's likes get incremented
+    """
     print request.form["id"]
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
         return render_template("404.html", errorText="Poem not found.")
     poem.likes += 1
+    poem.save()
     return redirect(url_for("poem", id=str(poem.id)))
 
 @app.route("/dislike", methods=["Post"])
 def dislike():
+    """post request for disliking a poem
+    the given poem id's dislikes with be incremented"""
     print request.form["id"]
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
         return render_template("404.html", errorText="Poem not found.")
     poem.dislikes += 1
+    poem.save()
     return redirect(url_for("poem", id=str(poem.id)))
 
 @app.route("/sendtweet", methods=["POST"])
 def sendtweet():
+    """request to submit a generated poem to twitter"""
     print "sending tweet"
     print request.form["id"]
     twitter = connect()

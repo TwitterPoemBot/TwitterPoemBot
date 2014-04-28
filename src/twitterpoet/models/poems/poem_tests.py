@@ -34,6 +34,11 @@ class TestPoem(unittest.TestCase):
         db_poem = Poem.query.filter_by(id=p.id).first()
         self.assertTrue(db_poem == None)
 
+    #test if poems scoring works
+    def test_score(self):
+        p = Peom("lorem ipusm")
+        self.assertTrue(p.likes==0)
+
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     unittest.main()

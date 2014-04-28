@@ -11,9 +11,11 @@ from sqlalchemy.sql import *
 
 poem_types = {'haiku': haiku, 'couplet': couplet, 'limerick': limerick}
 
-def load_more_tweets(hashtag):
+def load_more_tweets(hashtag, tries=10, count=100):
+    print 'Loading more tweets...'
     twitter = connect()
-    tweets = get_tweets_from_hashtag(twitter, hashtag)
+    tweets = get_tweets_from_hashtag(twitter, hashtag, tries=tries, count=count)
+    print 'hi'
     parsed_tweets = parse_all(tweets, hashtag)
     print 'Found ' + str(len(parsed_tweets)) + ' more tweets!'
     inserter = Tweet.__table__.insert().prefix_with('IGNORE')

@@ -15,7 +15,6 @@ def load_more_tweets(hashtag, tries=10, count=100):
     print 'Loading more tweets...'
     twitter = connect()
     tweets = get_tweets_from_hashtag(twitter, hashtag, tries=tries, count=count)
-    print 'hi'
     parsed_tweets = parse_all(tweets, hashtag)
     print 'Found ' + str(len(parsed_tweets)) + ' more tweets!'
     inserter = Tweet.__table__.insert().prefix_with('IGNORE')
@@ -37,7 +36,6 @@ def generatePoem(hashtag, type):
     for i in range(MAX_TRIES+1):
         try:
             print 'trying to make a poem'
-            # try to make the poem (poem looks at db on its own)
             poem = poem_types[type](hashtag)
             return poem
         except ValueError as e:

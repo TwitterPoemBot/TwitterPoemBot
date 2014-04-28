@@ -6,14 +6,14 @@ body {
  * a masthead is the spacer to push the page content down
  */
 .masthead {
-	height: 200px;
+	height: 100px;
 }
 
 /*
  * This is the cover container
  */
 .cover-container {
-	width: 700px;
+	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
 }

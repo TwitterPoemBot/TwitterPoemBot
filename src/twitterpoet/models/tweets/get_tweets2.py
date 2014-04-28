@@ -1,5 +1,6 @@
 from twython import Twython, TwythonRateLimitError
 import sys
+import math
 from time import time
 
 def RateLimitException(Exception):
@@ -72,3 +73,6 @@ def get_tweet_from_url(twitter, url):
     index = url.index("status/")
     num = url[7+index:]
     return twitter.show_status(id=num)['text'].encode('utf-8')
+
+def get_remaining_api_calls(twitter):
+    return int(math.floor(float(twitter.get_lastfunction_header('x-rate-limit-remaining'))/10))

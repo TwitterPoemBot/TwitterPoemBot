@@ -9,14 +9,6 @@ def haiku(hashtag):
     def get_lines(sylla_count):
         ''' Returns all tweets with the given number of syllables '''
 
-        # tweets = Tweet.query.filter_by(hashtag=hashtag) \
-        #                     .filter_by(syllables=sylla_count) \
-        # #                     .filter_by(SELECT t1.ID
-        # tweets = Tweet.query.from_statement('SELECT id FROM tweet LEFT JOIN tweets'
-        #     ' ON tweet.id = tweets.tweet_id WHERE tweets.tweet_id IS NULL AND tweet.hashtag = ' + '"'+hashtag+'"'
-        #     + ' AND tweet.syllables = ' + str(sylla_count)).all()
-                # .filter_by(hashtag=hashtag) \
-                # .filter_by(syllables=sylla_count).all()
         q = text('''SELECT * FROM tweet LEFT JOIN tweets ON tweet.id = tweets.tweet_id 
             WHERE tweets.tweet_id IS NULL AND tweet.hashtag = :h AND tweet.syllables = :s''')
         tweets = engine.connect().execute(q, h=hashtag, s=sylla_count).fetchall()

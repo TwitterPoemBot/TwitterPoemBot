@@ -48,10 +48,13 @@ TODO: extract the base layout from the home and poem page
 						<div class="col-md-4">
 							<h2>recent poems</h2>
 							<div class="list-group">
-								<a href="#" class="link-list">nig</a>
+                                {% for poem in recent_poems %}
+                                    <a href='/poem/ {{ poem.id }}' class="link-list">{{ poem.hashtag }} - {{ poem.type }} </a>
+                                {% endfor %}
+								<!-- <a href="#" class="link-list">{{ </a>
 								<a href="#" class="link-list">nog</a>
 								<a href="#" class="link-list">fig</a>
-								<a href="#" class="link-list">fog</a>
+								<a href="#" class="link-list">fog</a> -->
 							</div>
 						</div>
 						<div class="col-md-4">

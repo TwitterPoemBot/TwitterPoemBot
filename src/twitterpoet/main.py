@@ -126,6 +126,17 @@ def notfound(e):
 	print e
 	return render_template("404.html", errorText="Poem not found"), 404
 
+
+@app.route("/top")
+def top():
+    print 'hi'
+    poems = db.session.query(Poem).order_by(Poem.likes - Poem.dislikes).all()
+    for p in poems[:10]:
+        for t in p.tweets:
+            print t.text
+    return render_template("top.html", poems=poems)
+    # return render_template("404.html")
+
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == "__main__":

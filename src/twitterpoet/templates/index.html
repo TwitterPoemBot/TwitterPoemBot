@@ -40,26 +40,31 @@ TODO: extract the base layout from the home and poem page
 						<div class="col-md-4">
 							<h2>trending topics</h2>
 							<p>
+							<ul>
 								{% for line in trending %}
-								<a class="link-list" href="#" onClick='$("#query").val(" {{ line }} ")'> {{ line }} </a>
+								<li><a class="link-list" href="#" onClick='$("#query").val(" {{ line }} ")'> {{ line }} </a></li>
 								{% endfor %}
+							</ul>
 							</p>
 						</div>
 						<div class="col-md-4">
 							<h2>recent poems</h2>
 							<div class="list-group">
-								<a href="#" class="link-list">nig</a>
-								<a href="#" class="link-list">nog</a>
-								<a href="#" class="link-list">fig</a>
-								<a href="#" class="link-list">fog</a>
+								<ul>
+								{% for line in recent %}
+								<li><a href="poem/{{ line.id }}" class="link-list">A poem about {{line.hashtag }}</a></li>
+								{% endfor %}
+								</ul>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<h2>top poems</h2>
 							<div class="list-group">
+								<ul>
 								{% for line in top %}
-								<a href="poem/{{ line.id }}" class="link-list">A poem about {{ line.hashtag }}</a>
+								<li><a href="poem/{{ line.id }}" class="link-list">A poem about {{ line.hashtag }}</a></li>
 								{% endfor %}
+								</ul>
 							</div>
 						</div>
 					</div>

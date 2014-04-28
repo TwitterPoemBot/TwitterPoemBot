@@ -57,4 +57,6 @@ if(__name__ == "__main__"):
         word1 = raw_input("Word 1: ")
         word2 = raw_input("Word 2: ")
         print rhymes(word1, word2)
+        print getPhone(word1)
+        print getPhone(word2)
 

@@ -4,7 +4,7 @@
     To run it on a debug server, just type in the following command:
         python main.py
 """
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, abort
 from generate import generatePoem
 from models.poems.poem import Poem
 from models.poems.poem import db
@@ -31,7 +31,9 @@ def home_page():
         twitter = connect()
         session["trending"] = get_trending_topics(twitter)
         session["lastUpdateTime"] = datetime.datetime.now()
-    return render_template("index.html", trending=session["trending"])
+    top_poems = Poem.query.order_by(Poem.likes.desc()).all()
+    recent_poems = Poem.query.order_by(Poem.date.desc()).all()
+    return render_template("index.html", trending=session["trending"], recent=recent_poems[:5], top=top_poems[:5])
 
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -76,7 +78,8 @@ def poem(id):
         render_template("404.html", errorText="There was an error!")
     poem = Poem.query.filter_by(id=id).first()
     if poem is None:
-        return render_template("404.html", errorText="Poem not found.")
+    	abort(404)
+        #return render_template("404.html", errorText="Poem not found.")
     return render_template("poem.html", poem=poem)
 
 @app.route("/like", methods=["Post"])
@@ -87,7 +90,8 @@ def like():
     print request.form["id"]
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
-        return render_template("404.html", errorText="Poem not found.")
+    	abort(404)
+        #return render_template("404.html", errorText="Poem not found.")
     poem.likes += 1
     poem.save()
     return redirect(url_for("poem", id=str(poem.id)))
@@ -99,7 +103,8 @@ def dislike():
     print request.form["id"]
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
-        return render_template("404.html", errorText="Poem not found.")
+    	abort(404)
+        #return render_template("404.html", errorText="Poem not found.")
     poem.dislikes += 1
     poem.save()
     return redirect(url_for("poem", id=str(poem.id)))
@@ -112,10 +117,27 @@ def sendtweet():
     twitter = connect()
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
-        return render_template("404.html", errorText="Poem not found.")
+    	abort(404)
+        #return render_template("404.html", errorText="Poem not found.")
     sendPoem(twitter, poem)
     print "send success"
     return redirect(url_for("poem", id=str(poem.id)))
+
+@app.errorhandler(404)
+def notfound(e):
+	print e
+	return render_template("404.html", errorText="Poem not found"), 404
+
+
+@app.route("/top")
+def top():
+    print 'hi'
+    poems = db.session.query(Poem).order_by(Poem.likes - Poem.dislikes).all()
+    for p in poems[:10]:
+        for t in p.tweets:
+            print t.text
+    return render_template("top.html", poems=poems)
+    # return render_template("404.html")
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 

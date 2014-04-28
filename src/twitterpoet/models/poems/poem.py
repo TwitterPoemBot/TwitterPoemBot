@@ -5,11 +5,11 @@ from sqlalchemy import create_engine
 import datetime
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://tpg:uiucCS428@ampolgroup.com/twitterpoem'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://localhost/test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://tpg:uiucCS428@ampolgroup.com/twitterpoem'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://localhost/test'
 db = SQLAlchemy(app)
-# engine = create_engine('mysql://tpg:uiucCS428@ampolgroup.com/twitterpoem', echo=True) #echo=True for debugging
-engine = create_engine('mysql://localhost/test', echo=True) #echo=True for debugging
+engine = create_engine('mysql://tpg:uiucCS428@ampolgroup.com/twitterpoem', echo=True) #echo=True for debugging
+#engine = create_engine('mysql://localhost/test', echo=True) #echo=True for debugging
 
 tweets = db.Table('tweets',
     db.Column('poem_id', db.Integer, db.ForeignKey('poem.id')),

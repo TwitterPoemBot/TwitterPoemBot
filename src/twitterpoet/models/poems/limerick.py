@@ -11,6 +11,9 @@ def limerick(hashtag):
     tweets = engine.connect().execute(q, h=hashtag).fetchall()
     corpus = [{'line':t.text, 'syllables':t.syllables, 'phone':t.phone, 'id':t.id, 'last_word':t.last_word} \
                 for t in tweets]
+    print "-*"*10
+    print len(corpus)
+    print "-*"*10
 
     def get_lines(sylla_min, sylla_max, n):
         ''' Returns dic of at least n rhyming tweets within the given syllable range
@@ -57,13 +60,10 @@ def limerick(hashtag):
     6-10A
     '''
     try:
-        a = get_lines(6, 12, 3) # Get 3 6-10 syllable lines that rhyme
-        b = get_lines(3, 6, 2)  # Get 2 3-6 syllable lines that rhyme
+        a = get_lines(6, 12, 3) # Get 3 6-12 syllable lines that rhyme
+        b = get_lines(3, 7, 2)  # Get 2 3-6 syllable lines that rhyme
     except ValueError as e:
         raise ValueError('Could not construct limerick - not enough tweets') 
-    print "Limerick: A, B"
-    print a
-    print b
     
     # tweets = [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[:2]]
     # tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in b]

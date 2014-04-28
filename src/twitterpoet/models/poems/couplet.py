@@ -19,6 +19,7 @@ def couplet(hashtag):
         return [line for line in corpus if line != {} and line['phone'] == phone and word.lower() != line['last_word'].lower() and abs(line['syllables'] - syllables)<=1]
     def get_lines2():
         return [line for line in corpus if line != {} and line['phone'] != None and len(get_lines(line['phone'], line['last_word'], line['syllables']))>0]  
+        
     try:
         # Get random sample from 5 or 7 syllable tweets
         first = sample(get_lines2(), 1)

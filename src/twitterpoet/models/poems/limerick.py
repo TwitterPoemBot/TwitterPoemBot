@@ -1,10 +1,16 @@
 from random import sample
-from poem import Tweet
-from poem import Poem
+from poem import Tweet, Poem, engine, db
+from sqlalchemy.sql import text
 import logging
 
-def limerick(corpus, hashtag):
+def limerick(hashtag):
     ''' Generates a limerick given a dictionary of line/syllables/phone ''' 
+
+    q = text('''SELECT * FROM tweet LEFT JOIN tweets ON tweet.id = tweets.tweet_id 
+            WHERE tweets.tweet_id IS NULL AND tweet.hashtag = :h''')
+    tweets = engine.connect().execute(q, h=hashtag).fetchall()
+    corpus = [{'line':t.text, 'syllables':t.syllables, 'phone':t.phone, 'id':t.id, 'last_word':t.last_word} \
+                for t in tweets]
 
     def get_lines(sylla_min, sylla_max, n):
         ''' Returns dic of at least n rhyming tweets within the given syllable range
@@ -54,14 +60,17 @@ def limerick(corpus, hashtag):
         a = get_lines(6, 12, 3) # Get 3 6-10 syllable lines that rhyme
         b = get_lines(3, 6, 2)  # Get 2 3-6 syllable lines that rhyme
     except ValueError as e:
-        raise Exception('Could not construct limerick - not enough tweets') 
+        raise ValueError('Could not construct limerick - not enough tweets') 
     print "Limerick: A, B"
     print a
     print b
     
-    tweets = [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[:2]]
-    tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in b]
-    tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[2:3]]
+    # tweets = [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[:2]]
+    # tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in b]
+    # tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[2:3]]
+
+    tweets = [a[0], a[1], b[0], b[1], a[2]]
+    tweets = [db.session.query(Tweet).get(t['id']) for t in tweets]
     
     poem = Poem(tweets, hashtag, 'limerick')
     

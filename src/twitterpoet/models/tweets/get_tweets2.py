@@ -2,6 +2,12 @@ from twython import Twython, TwythonRateLimitError
 import sys
 from time import time
 
+def RateLimitException(Exception):
+    def __init__(self, value):
+        self.parameter = value
+    def __str__(self):
+        return repr(self.parameter)
+
 def connect():
     return Twython(app_key="7JpoIKJbcWppGabeAuyGA", app_secret="cVQGxy1fcxJJxJ3avyitZ4wNqAUEWNTIEgjNUDZnA",
                   oauth_token="2329651538-iZ2nEPBSIyl3u5AnU4ppfYEfJflTEeH6Krl8OO5", oauth_token_secret="V6ja2kfgl3aNr28QvOb9VmlbP8e9jxkora82wplPT43Vz")
@@ -35,7 +41,7 @@ def get_tweets_from_file(s):
 def get_tweets_from_hashtag(twitter, hashtag):
     max_id = float("inf")
     tweets = []
-    for n in range(1,21):
+    for n in range(1,10):
         results = []
         try:
             results.append(twitter.search(q=hashtag, count=100, max_id=max_id))
@@ -46,7 +52,7 @@ def get_tweets_from_hashtag(twitter, hashtag):
                     max_id = tweet['id']
         except TwythonRateLimitError as e:
             seconds = str(float(twitter.get_lastfunction_header('x-rate-limit-reset'))-time()+5)
-            raise Exception('You hit the rate limit! Try again in '+seconds+' seconds.')
+            raise RateLimitException('You hit the rate limit! Try again in '+seconds+' seconds.')
     return tweets
 
 def get_fewer_tweets_from_hashtag(twitter, hashtag):

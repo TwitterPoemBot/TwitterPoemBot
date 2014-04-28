@@ -2,6 +2,7 @@ import re, string, logging
 from rhymer.rhyme_checker import getPhone, isInDict, checkWeakRhyme
 from syllables.sylla import syllables
 from sets import Set
+from models.poems.poem import Tweet
 
 # Words that will be filtered from the actual line of the tweetz
 filtered_words = re.compile(r'^([@\\]|RT$)|https?://|www.')
@@ -21,13 +22,14 @@ def is_english(line):
             and float(char_count) / len(line) >= c_threshold
 
 def parse(line):
-    ''' Parses an individual line '''
+    ''' Parses an individual line, returning an incomplete Tweet object
+            (missing the hashtag and url) '''
 
     line = line.replace('&amp', '&')    # Hardcoded rule for '&amp' to '&'
     logging.info("Parsing: " + line)
     if not is_english(line):
         logging.info("non-english: " + line)
-        return {}
+        return None
     # words is a list of the cleaned up words to feed syllable/rhymer
     words = []
     # line is the actual string of text to be presented to user
@@ -36,7 +38,7 @@ def parse(line):
         if len(cleaned) != 0 and not filtered_words.findall(word):
             words.append(cleaned)
     if len(words) == 0:
-        return {}
+        return None
     # Remove hashtags at the end from the line
     while (words[-1][0] == '#'):
         words.pop(-1)
@@ -50,17 +52,18 @@ def parse(line):
     phone = getPhone(words[-1])
     last_word = words[-1].lower();
     
-    parsed = {'line':line, 'syllables':count, 'phone':phone, 'last_word':last_word, 'url':""}
+    parsed = {'text':line.decode('ascii', 'ignore'), 'syllables':count, 'phone':phone, 'last_word':last_word, 'url':'', 'hashtag':''}
+    # parsed = Tweet(line.decode('ascii', 'ignore'), '', '', count, phone, last_word)
     logging.info(parsed)
     return parsed
 
-def parse_all(tweets):
-    ''' Returns a unique list of dictionaries with keys ('line', syllables', 'phone') 
-        given a list of tweets and their urls (ex. ['tweet 1', 'url 1', 'tweet 2', 'url 2'])
+def parse_all(tweets, hashtag):
+    ''' Returns a unique list of Tweets given a list of tweets and their urls
+            ex. ['tweet 1', 'url 1', 'tweet 2', 'url 2']
         note 'phone' may be None, if the last word has no rhyme.
 
         This ignores words like 'RT', '@foo', '#foo', 'http://..'
-        ex. 'RT @someone: hello #friend :) #hi' -> 'hello :)'
+            ex. 'RT @someone: hello #friend :) #hi' -> 'hello :)'
     '''
     urls = tweets[1::2]
     tweets = tweets[0::2]
@@ -70,16 +73,17 @@ def parse_all(tweets):
     count, rejected, duplicates = 0, 0, 0 # For logging purposes
     for tweet in tweets:
         parsed = parse(tweet) 
-	url = urls.pop(0)
+    	url = urls.pop(0)
         # Reject if parsed fails or if the cleaned tweet text is duplicated
-        if parsed == {}:
+        if parsed == None:
             rejected += 1
-        elif seen_tweets.get(parsed['line']):
+        elif seen_tweets.get(parsed['text']):
             duplicates += 1
         else:
             parsed['url'] = url
+            parsed['hashtag'] = hashtag
             parsed_tweets.append(parsed)
-            seen_tweets[parsed['line']] = 1
+            seen_tweets[parsed['text']] = 1
         count += 1
     # parsed_tweets = [parse(tweet) for tweet in tweets if parse(tweet) != {}]
     logging.info('Total tweets:' +  str(count) + ' rejected:' + str(rejected) + ' duplicates:' + str(duplicates))

@@ -1,10 +1,9 @@
 import unittest
 import sys
-import math
 from twython import TwythonRateLimitError
 
 sys.path.insert(0, '../')
-from models.tweets.get_tweets2 import get_tweets_from_hashtag, connect
+from models.tweets.get_tweets2 import get_tweets_from_hashtag, connect, get_remaining_api_calls
 
 class TestRateLimit(unittest.TestCase):
     def test_no_exception(self):
@@ -13,7 +12,7 @@ class TestRateLimit(unittest.TestCase):
         try:
             get_tweets_from_hashtag(twitter, "#WeWereBornForThis")
             global remaining
-            remaining = int(math.floor(float(twitter.get_lastfunction_header('x-rate-limit-remaining'))/10))
+            remaining = get_remaining_api_calls(twitter)
         
         except:
             self.fail("Exception was thrown where one wasn't expected.")

@@ -52,7 +52,7 @@ TODO: extract the base layout from the home and poem page
 							<div class="list-group">
 								<ul>
 								{% for line in recent %}
-								<li><a href="poem/{{ line.id }}" class="link-list">A poem about {{line.hashtag }}</a></li>
+								<li><a href="poem/{{ line.id }}" class="link-list">A {{ line.type }} about {{line.hashtag }}</a></li>
 								{% endfor %}
 								</ul>
 							</div>
@@ -62,7 +62,7 @@ TODO: extract the base layout from the home and poem page
 							<div class="list-group">
 								<ul>
 								{% for line in top %}
-								<li><a href="poem/{{ line.id }}" class="link-list">A poem about {{ line.hashtag }}</a></li>
+								<li><a href="poem/{{ line.id }}" class="link-list">A {{ line.type }} about {{ line.hashtag }}</a></li>
 								{% endfor %}
 								</ul>
 							</div>

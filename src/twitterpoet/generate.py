@@ -12,7 +12,7 @@ def generatePoem(hashtag, type):
 
     tweets = get_tweets_from_hashtag(twitter, hashtag)
     parsed_tweets = parse_all(tweets)
-    logging.info(len(tweets) + " retrieved.")
+    logging.info(str(len(tweets)) + " retrieved.")
     if type == 'haiku':
         return haiku(parsed_tweets, hashtag)
     elif type == 'couplet':

@@ -1,7 +1,9 @@
 body {
 	font-family: 'Dosis', sans-serif;
 	text-align: center;
+	font-size: small;
 }
+p {font-size: medium}
 /*
  * a masthead is the spacer to push the page content down
  */

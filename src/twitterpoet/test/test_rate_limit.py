@@ -26,7 +26,7 @@ class TestRateLimit(unittest.TestCase):
         with self.assertRaises(Exception):
             get_tweets_from_hashtag(twitter, "#WeWereBornForThis")
 
-    def test_throws_exception2(self):
+    def test_exception_format(self):
         ''' Tests that the exception message has the correct format  '''
         twitter = connect()
         try:
@@ -35,7 +35,7 @@ class TestRateLimit(unittest.TestCase):
             self.assertTrue("You hit the rate limit! Try again in " in str(e))
             self.assertTrue(" seconds." in str(e))
 
-    def test_throws_exception3(self):
+    def test_exception_less_than_15_minutes(self):
         ''' Tests that an exception says the remaining seconds and that it's less than 15 minutes  '''
         twitter = connect()
         try:
@@ -46,7 +46,7 @@ class TestRateLimit(unittest.TestCase):
             num = float(s[s.index("in")+6:s.index("seconds")-1])
             self.assertTrue(num<15*60)
 
-    def test_throws_exception4(self):
+    def test_exception_decreases(self):
         ''' Tests that the exception message decreases  '''
         twitter = connect()
         try:

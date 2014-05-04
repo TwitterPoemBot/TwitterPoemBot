@@ -6,6 +6,7 @@ TODO: extract the base layout from the home and poem page
 <html>
 	<head>
 		<title>Twitter Poem Generator</title>
+		<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
 	</head>
 	<body id="dim">
     <div style="position: absolute; top:50%; left:50%;" id="loading"></div>
@@ -27,11 +28,15 @@ TODO: extract the base layout from the home and poem page
                         <br />
                         <div class="control-group">
                           <div class="controls">
-                            <select id="format" name="format" class="input-xlarge">
-                              <option value="0">Haiku</option>
-                              <option value="1">Couplet</option>
-                              <option value="2">Limerick</option>
-                          </select>
+			    <div class="row">
+				<div class="col-xs-offset-4 col-xs-4">
+                                <select id="format" name="format" class="form-control" width=200px>
+                              	  <option value="0">Haiku</option>
+                              	  <option value="1">Couplet</option>
+                              	  <option value="2">Limerick</option>
+                                </select>
+			      </div>
+			    </div>
                           </div>
                         </div>
                     </form>
@@ -47,6 +52,7 @@ TODO: extract the base layout from the home and poem page
 								</ul>
 							</div>
 						</div>
+
 						<div class="col-md-6">
 							<h2>top poems</h2>
 							<div class="list-group">

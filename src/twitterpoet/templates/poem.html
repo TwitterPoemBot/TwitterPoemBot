@@ -13,7 +13,7 @@ TODO: extract the base layout from the home and poem page
 			<div class="cover-container">
 				<div class="masthead"></div>
 				<div class="inner cover center-block">
-					<h1 class="cover-heading">Twitter Poem Generator</h1>
+					<h1 class="cover-heading">twitter poem generator</h1>
 
                     <div class="formHolder pull-left">
                             <form class="likeForm" role="form" action="/like" method="post">
@@ -32,11 +32,15 @@ TODO: extract the base layout from the home and poem page
                             </form>
                             <form role="form" action="/sendtweet" method="post">
                                 <input type="hidden" name="id" id="id" value="{{ poem.id }}"></input> 
-                                <button type="submit" class="btn btn-default">Tweet this poem</button>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm btn-danger" onclick="window.history.back()">Back</button>
+					<button type="submit" class="btn btn-default btn-sm btn-info">Tweet</button>
+				</div>
                             </form>
                     </div>
 					<div style="width: 100%; margin-left: 25px;">
-                    <p id="output"> 
+                    
+		    <p id="output"> 
                     {% for tweet in poem.tweets %}
                     	{{ tweet.text.decode('utf-8') }}
                     	<a href="http://{{tweet.url.decode('utf-8')}}">

@@ -10,10 +10,12 @@ def RateLimitException(Exception):
         return repr(self.parameter)
 
 def connect():
+    ''' Connects to the twitter api ''' 
     return Twython(app_key="7JpoIKJbcWppGabeAuyGA", app_secret="cVQGxy1fcxJJxJ3avyitZ4wNqAUEWNTIEgjNUDZnA",
                   oauth_token="2329651538-iZ2nEPBSIyl3u5AnU4ppfYEfJflTEeH6Krl8OO5", oauth_token_secret="V6ja2kfgl3aNr28QvOb9VmlbP8e9jxkora82wplPT43Vz")
 
 def get_trending_topics(twitter):
+    ''' Returns an array of the top trending topics''' 
     trends = twitter.get_place_trends(id=23424977)
     topics = []
     for trend in trends[0].get('trends',[]):
@@ -21,6 +23,7 @@ def get_trending_topics(twitter):
     return topics
 
 def get_tweets(twitter, topics):
+    ''' Returns 50 tweets for each of the topics given ''' 
     results = []
     for topic in topics:    
         results.append(twitter.search(q=topic, count=50))
@@ -31,6 +34,7 @@ def get_tweets(twitter, topics):
     text_file.close()
 
 def get_tweets_from_file(s):
+    ''' Returns tweets from a .txt file ''' 
     tweets = []
     with open("Output.txt", "r") as f:
         lines = f.readlines()
@@ -40,6 +44,7 @@ def get_tweets_from_file(s):
     return tweets
 
 def get_tweets_from_hashtag(twitter, hashtag, tries=10, count=100):
+    ''' Returns tweets that contain a given hashtag using the given tries and count ''' 
     max_id = float("inf")
     tweets = []
     for n in range(1,tries+1):
@@ -57,6 +62,7 @@ def get_tweets_from_hashtag(twitter, hashtag, tries=10, count=100):
     return tweets
 
 def get_fewer_tweets_from_hashtag(twitter, hashtag):
+    ''' Returns a smaller amount of tweets with the given hashtag ''' 
     max_id = float("inf")
     tweets = []
     for n in range(1,3):
@@ -70,9 +76,11 @@ def get_fewer_tweets_from_hashtag(twitter, hashtag):
     return tweets
 
 def get_tweet_from_url(twitter, url):
+    ''' Returns the tweet referenced by the given url ''' 
     index = url.index("status/")
     num = url[7+index:]
     return twitter.show_status(id=num)['text'].encode('utf-8')
 
 def get_remaining_api_calls(twitter):
+    ''' Returns the number of remaining api calls before the rate limit is reached ''' 
     return int(math.floor(float(twitter.get_lastfunction_header('x-rate-limit-remaining'))/10))

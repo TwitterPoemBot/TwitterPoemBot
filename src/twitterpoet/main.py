@@ -14,7 +14,6 @@ from models.tweets.get_tweets2 import sendPoem
 import logging
 import datetime
 app = Flask(__name__)
-trending = ""
 
 @app.route("/")
 def home_page():
@@ -121,13 +120,14 @@ def sendtweet():
 
 @app.errorhandler(404)
 def notfound(e):
+	""" this page is returned whenever there's an error."""
 	print e
 	return render_template("404.html", errorText="Poem not found"), 404
 
 
 @app.route("/top")
 def top():
-    print 'hi'
+	"""  This page contains the top 10 poems by likes - dislikes """
     poems = db.session.query(Poem).order_by(Poem.likes - Poem.dislikes).all()
     for p in poems[:10]:
         for t in p.tweets:

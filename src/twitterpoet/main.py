@@ -79,7 +79,6 @@ def poem(id):
     poem = Poem.query.filter_by(id=id).first()
     if poem is None:
     	abort(404)
-        #return render_template("404.html", errorText="Poem not found.")
     return render_template("poem.html", poem=poem)
 
 @app.route("/like", methods=["Post"])
@@ -91,7 +90,6 @@ def like():
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
     	abort(404)
-        #return render_template("404.html", errorText="Poem not found.")
     poem.likes += 1
     poem.save()
     return redirect(url_for("poem", id=str(poem.id)))
@@ -104,7 +102,6 @@ def dislike():
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
     	abort(404)
-        #return render_template("404.html", errorText="Poem not found.")
     poem.dislikes += 1
     poem.save()
     return redirect(url_for("poem", id=str(poem.id)))
@@ -118,7 +115,6 @@ def sendtweet():
     poem = Poem.query.filter_by(id=request.form["id"]).first()
     if poem is None:
     	abort(404)
-        #return render_template("404.html", errorText="Poem not found.")
     sendPoem(twitter, poem)
     print "send success"
     return redirect(url_for("poem", id=str(poem.id)))
@@ -137,11 +133,10 @@ def top():
         for t in p.tweets:
             print t.text
     return render_template("top.html", poems=poems)
-    # return render_template("404.html")
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == "__main__":
-    # db.drop_all()
+    # db.drop_all() # uncomment to rebuild the database 
     db.create_all()
     app.run(host='0.0.0.0')

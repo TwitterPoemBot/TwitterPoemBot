@@ -17,7 +17,8 @@ tweets = db.Table('tweets',
 )
 
 class Poem(db.Model):
-    """This is a model to allow poems to be saved in the db"""
+    '''This is a model to allow poems to be saved in the db'''
+
     id = db.Column(db.Integer, primary_key=True)
     hashtag = db.Column(db.String(50))
     type = db.Column(db.String(50))
@@ -38,14 +39,9 @@ class Poem(db.Model):
         self.type = type
         self.date = datetime.datetime.now()
 
-    #def __repr__(self):
-    #    return '<Poem %r>' % self.poemText
-
     def save(self):
         """Saves a poem to the db"""
         db.session.add(self)
-        # for tweet in self.tweets:
-
         db.session.commit()
         return self.id
 
@@ -56,6 +52,8 @@ class Poem(db.Model):
         self.dislikes += 1
 
 class Tweet(db.Model):
+    ''' This class models a single tweet from Twitter '''
+
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(140))
     text = db.Column(db.String(140))
@@ -66,6 +64,7 @@ class Tweet(db.Model):
     __table_args__ = (UniqueConstraint('text', 'hashtag'), )
 
     def __init__(self, text, url, hashtag, syllables, phone, last):
+        ''' Constructor for Tweet. '''
         self.text = text
         self.url = url
         self.hashtag = hashtag
@@ -74,6 +73,7 @@ class Tweet(db.Model):
         self.last_word = last
 
     def save(self):
+        ''' Saves a Tweet to the database '''
         db.session.add(self)
         db.session.commit()
         return self.id

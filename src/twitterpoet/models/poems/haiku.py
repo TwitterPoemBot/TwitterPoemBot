@@ -25,8 +25,5 @@ def haiku(hashtag):
         raise ValueError('Could not construct haiku - not enough tweets') 
 
     tweets = [five_syllables[0], seven_syllables[0], five_syllables[1]]
-    print [t.id for t in tweets]
     tweets = [db.session.query(Tweet).get(t.id) for t in tweets]
-    print tweets
-    print '---'
     return Poem(tweets, hashtag, 'haiku')

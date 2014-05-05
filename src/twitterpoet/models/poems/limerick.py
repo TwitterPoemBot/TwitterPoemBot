@@ -53,6 +53,7 @@ def limerick(hashtag):
             raise ValueError
 
     '''
+    Limerick format is as follows:
     6-12A
     6-12A
     3-6B
@@ -65,10 +66,6 @@ def limerick(hashtag):
     except ValueError as e:
         raise ValueError('Could not construct limerick - not enough tweets') 
     
-    # tweets = [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[:2]]
-    # tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in b]
-    # tweets += [Tweet(i['line'].decode('ascii', 'ignore'), i['url'].decode('ascii', 'ignore'), hashtag) for i in a[2:3]]
-
     tweets = [a[0], a[1], b[0], b[1], a[2]]
     tweets = [db.session.query(Tweet).get(t['id']) for t in tweets]
     

@@ -6,7 +6,6 @@ try:
     f = open(os.path.join(os.path.dirname(__file__), os.pardir, 'CMU_Dict.txt'), 'r')
 except:
     f = open(os.path.join(os.pardir, 'CMU_Dict.txt'), 'r')
-# print f
     
 for line in f:
     if(line.find(';;;') == -1):
@@ -33,17 +32,16 @@ def getPhone(w):
         return None
 
 def checkWeakRhyme(a1, a2):
+    ''' Check if two words rhyme weakly '''
     weak = {'AA':1, 'AE':2, 'AH':3, 'AO':1, 'AW':5, 'AY':6, 'EH':7, 'ER':8,
                 'EY':9, 'IH':10, 'IY':11, 'OW':12, 'OY':13, 'UH':14, 'UW':15}
     return (weak[a1[:2]] == weak[a2[:2]]) and (a1[3:] == a2[3:])
 
-#method checks if two words rhymes
 def rhymes(w1, w2):
+    ''' Checks if two words rhyme '''
     word1 = w1.upper()
     word2 = w2.upper()
     if(isInDict(word1) and isInDict(word2)):
-        #print rhy_dict[word1]
-        #print rhy_dict[word2]
         return rhy_dict[word1] == rhy_dict[word2]
     else:
         print "Word(s) not in dictionary."
@@ -51,8 +49,6 @@ def rhymes(w1, w2):
 
 
 if(__name__ == "__main__"):
-    #r = Rhymer('CMU_Dict.txt');
-
     while(True) :
         word1 = raw_input("Word 1: ")
         word2 = raw_input("Word 2: ")

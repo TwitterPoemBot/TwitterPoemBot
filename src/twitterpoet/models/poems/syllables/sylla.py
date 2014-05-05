@@ -25,6 +25,7 @@ f.close()
 
 def syllables(word):
     ''' Returns the number of syllables in the given word '''
+    
     word = word.lower()
     # Ignore URLs, hashtags, usernames
     if len(word) == 0 or word[:4] == 'http' or word[0] in ['#', '@']:
@@ -33,7 +34,6 @@ def syllables(word):
         return syllable_dic[word][0]
     # Handle numbers
     # Use heuristic if it's not in any dictionary
-    # logging.warning('Using heuristic')
     if len(word) <= 3:
         return 1
     else:

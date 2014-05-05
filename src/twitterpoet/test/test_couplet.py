@@ -15,7 +15,6 @@ class TestCouplet(unittest.TestCase):
         db = SQLAlchemy(app)
         db.drop_all()
         db.create_all()
-        print 'adding'
         db.session.add(Tweet('Boy I like the bay', '', 'couplet_test1', 5, 'AO1F', 'bay'))
         db.session.add(Tweet('We will go there today!', '', 'couplet_test1', 6, 'AO1F', 'today'))
         db.session.add(Tweet('some filler', '', 'couplet_test1', 3, '', 'filler'))
@@ -29,8 +28,6 @@ class TestCouplet(unittest.TestCase):
         
         db.session.commit()
       except Exception as e:
-        print '='*10
-        print e
         db.session.rollback()
 
     def test_one_more_syllable(self):

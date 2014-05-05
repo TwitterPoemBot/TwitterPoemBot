@@ -12,15 +12,14 @@ from sqlalchemy.sql import *
 poem_types = {'haiku': haiku, 'couplet': couplet, 'limerick': limerick}
 
 def load_more_tweets(hashtag, tries=10, count=100):
-    print 'Loading more tweets...'
+    ''' Loads a maximum of count * tries number of new recent tweets with the given hashtag into the database '''
+    
     twitter = connect()
     tweets = get_tweets_from_hashtag(twitter, hashtag, tries=tries, count=count)
     parsed_tweets = parse_all(tweets, hashtag)
-    print 'Found ' + str(len(parsed_tweets)) + ' more tweets!'
     inserter = Tweet.__table__.insert().prefix_with('IGNORE')
     engine.execute(inserter, parsed_tweets)
     db.session.commit()
-    print 'Added ' + str(len(parsed_tweets)) + ' to db!'
 
 def generatePoem(hashtag, type):
     ''' Takes in a hashtag and poem type and returns a poem as a string '''

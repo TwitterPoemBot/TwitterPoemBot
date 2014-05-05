@@ -15,12 +15,6 @@ class TestHaiku(unittest.TestCase):
         db = SQLAlchemy(app)
         db.drop_all()
         db.create_all()
-        print 'adding'
-        # engine = create_engine('mysql://localhost/test', echo=True) #echo=True for debugging
-        # Tweet.insert().values(text='5 syllable line(1)', url='', phone='', last='', hashtag='haiku_test1', syllables=5)
-        # Tweet.insert().values(text='a seven syllable line', hashtag='haiku_test1', syllables=7)
-        # Tweet.insert().values(text='5 syllable line(2)', hashtag='haiku_test1', syllables=5)
-        # Tweet.insert().values(text='some filler', hashtag='haiku_test1', syllables=3)
         db.session.add(Tweet('5 syllable line(1)', '', 'haiku_test1', 5, '', ''))
         db.session.add(Tweet('5 syllable line(2)', '', 'haiku_test1', 5, '', ''))
         db.session.add(Tweet('a seven syllable line', '', 'haiku_test1', 7, '', ''))
@@ -36,11 +30,10 @@ class TestHaiku(unittest.TestCase):
 
         db.session.commit()
       except Exception as e:
-        print '='*10
-        print e
         db.session.rollback()
 
     def test_valid(self):
+        ''' Test a valid amount of tweets '''
         poem = haiku.haiku("haiku_test1")
         poem = [t.text for t in poem.tweets]
         print poem
@@ -56,6 +49,7 @@ class TestHaiku(unittest.TestCase):
         self.assertRaises(Exception, haiku.haiku, 'haiku_test2')
 
     def test_valid1(self):
+        ''' Test extraneous tweets are ignored '''
         poem = haiku.haiku('haiku_test3')
         print poem
         poem = [t.text for t in poem.tweets]

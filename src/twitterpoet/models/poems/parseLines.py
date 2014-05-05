@@ -44,7 +44,6 @@ def parse(line):
         words.pop(-1)
     # Remove ignored words from the actual tweet
     line = ' '.join([w for w in line.split() if not filtered_words.findall(w)])
-    # words = filter(None, [re.sub('[\W_]+', '', word) for word in line.split( )])
     line = re.sub(r'#', '', line)
     count = 0
     for word in words:
@@ -53,7 +52,6 @@ def parse(line):
     last_word = words[-1].lower();
     
     parsed = {'text':line.decode('ascii', 'ignore'), 'syllables':count, 'phone':phone, 'last_word':last_word, 'url':'', 'hashtag':''}
-    # parsed = Tweet(line.decode('ascii', 'ignore'), '', '', count, phone, last_word)
     logging.info(parsed)
     return parsed
 
@@ -85,7 +83,6 @@ def parse_all(tweets, hashtag):
             parsed_tweets.append(parsed)
             seen_tweets[parsed['text']] = 1
         count += 1
-    # parsed_tweets = [parse(tweet) for tweet in tweets if parse(tweet) != {}]
     logging.info('Total tweets:' +  str(count) + ' rejected:' + str(rejected) + ' duplicates:' + str(duplicates))
     logging.info('-'*10)
     return parsed_tweets

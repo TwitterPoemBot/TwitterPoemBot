@@ -84,3 +84,11 @@ def get_tweet_from_url(twitter, url):
 def get_remaining_api_calls(twitter):
     ''' Returns the number of remaining api calls before the rate limit is reached ''' 
     return int(math.floor(float(twitter.get_lastfunction_header('x-rate-limit-remaining'))/10))
+
+def sendPoem(twitter, poem):
+    ''' Tweets out a poem '''
+    text = poem.hashtag
+    text += "\n"
+    for tweet in poem.tweets:
+        text += tweet.url + "\n"
+    twitter.update_status(status=text)

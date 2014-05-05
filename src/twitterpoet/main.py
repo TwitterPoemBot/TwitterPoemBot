@@ -10,7 +10,7 @@ from models.poems.poem import Poem
 from models.poems.poem import db
 from models.tweets.get_tweets2 import connect
 from models.tweets.get_tweets2 import get_trending_topics
-from models.tweets.send_tweet import sendPoem
+from models.tweets.get_tweets2 import sendPoem
 import logging
 import datetime
 app = Flask(__name__)

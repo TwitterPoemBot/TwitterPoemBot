@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, '../')
 from models.poems.poem import Poem
 from models.poems.poem import Tweet
-from models.tweets.send_tweet import sendPoem
+from models.tweets.get_tweets2 import sendPoem
 
 class Test(unittest.TestCase):
 
